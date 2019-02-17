@@ -145,7 +145,7 @@
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonSave);
             this.Name = "FormBooking";
-            this.Text = "FormBooking";
+            this.Text = "Оформление заказа";
             this.Load += new System.EventHandler(this.FormBooking_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
