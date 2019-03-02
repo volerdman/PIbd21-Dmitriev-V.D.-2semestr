@@ -21,6 +21,10 @@ namespace AbstractRepairWorkServiceImplement
 
         public List<MaterialRepair> MaterialRepairs { get; set; }
 
+        public List<Storage> Storages { get; set; }
+
+        public List<StorageMaterial> StorageMaterials { get; set; }
+
         private DataSingletonList()
         {
             Customers = new List<Customer>();
@@ -28,6 +32,8 @@ namespace AbstractRepairWorkServiceImplement
             Bookings = new List<Booking>();
             Repairs = new List<Repair>();
             MaterialRepairs = new List<MaterialRepair>();
+            Storages = new List<Storage>();
+            StorageMaterials = new List<StorageMaterial>();
         }
 
         public static DataSingletonList GetInstance()

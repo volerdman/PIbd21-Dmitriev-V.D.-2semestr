@@ -48,6 +48,8 @@
     <Compile Include="MaterialRepair.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repair.cs" />
+    <Compile Include="Storage.cs" />
+    <Compile Include="StorageMaterial.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

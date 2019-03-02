@@ -13,90 +13,78 @@ namespace AbstractRepairWorkServiceImplement.Implementations
     public class MaterialServiceList:IMaterialService
     {
         private DataSingletonList source;
+
         public MaterialServiceList()
         {
             source = DataSingletonList.GetInstance();
         }
+
         public List<MaterialViewModel> ListGet()
         {
-            List<MaterialViewModel> result = new List<MaterialViewModel>();
-            for (int i = 0; i < source.Materials.Count; ++i)
+            List<MaterialViewModel> result = source.Materials.Select(rec => new MaterialViewModel
             {
-                result.Add(new MaterialViewModel
-                {
-                    Id = source.Materials[i].Id,
-                    MaterialName = source.Materials[i].MaterialName
-                });
-            }
+                Id = rec.Id,
+                MaterialName = rec.MaterialName
+            }).ToList();
             return result;
         }
+
         public MaterialViewModel ElementGet(int id)
         {
-            for (int i = 0; i < source.Materials.Count; ++i)
+            Material element = source.Materials.FirstOrDefault(rec => rec.Id == id);
+            if (element != null)
             {
-                if (source.Materials[i].Id == id)
+                return new MaterialViewModel
                 {
-                    return new MaterialViewModel
-                    {
-                        Id = source.Materials[i].Id,
-                        MaterialName = source.Materials[i].MaterialName
-                    };
-                }
+                    Id = element.Id,
+                    MaterialName = element.MaterialName
+                };
             }
             throw new Exception("Элемент не найден");
         }
+
         public void AddElement(MaterialBindingModel model)
         {
-            int maxId = 0;
-            for (int i = 0; i < source.Materials.Count; ++i)
+            Material element = source.Materials.FirstOrDefault(rec => rec.MaterialName == model.MaterialName);
+            if (element != null)
             {
-                if (source.Materials[i].Id > maxId)
-                {
-                    maxId = source.Materials[i].Id;
-                }
-                if (source.Materials[i].MaterialName == model.MaterialName)
-                {
-                    throw new Exception("Уже есть материал с таким названием");
-                }
+                throw new Exception("Уже есть материал с таким названием");
             }
+            int maxId = source.Materials.Count > 0 ? source.Materials.Max(rec =>
+           rec.Id) : 0;
             source.Materials.Add(new Material
             {
                 Id = maxId + 1,
                 MaterialName = model.MaterialName
             });
         }
+
         public void UpdateElement(MaterialBindingModel model)
         {
-            int index = -1;
-            for (int i = 0; i < source.Materials.Count; ++i)
+            Material element = source.Materials.FirstOrDefault(rec => rec.MaterialName == model.MaterialName && rec.Id != model.Id);
+            if (element != null)
             {
-                if (source.Materials[i].Id == model.Id)
-                {
-                    index = i;
-                }
-                if (source.Materials[i].MaterialName == model.MaterialName &&
-                source.Materials[i].Id != model.Id)
-                {
-                    throw new Exception("Уже есть материал с таким названием");
-                }
+                throw new Exception("Уже есть материал с таким названием");
             }
-            if (index == -1)
+            element = source.Materials.FirstOrDefault(rec => rec.Id == model.Id);
+            if (element == null)
             {
                 throw new Exception("Элемент не найден");
             }
-            source.Materials[index].MaterialName = model.MaterialName;
+            element.MaterialName = model.MaterialName;
         }
+
         public void DeleteElement(int id)
         {
-            for (int i = 0; i < source.Materials.Count; ++i)
+            Material element = source.Materials.FirstOrDefault(rec => rec.Id == id);
+            if (element != null)
             {
-                if (source.Materials[i].Id == id)
-                {
-                    source.Materials.RemoveAt(i);
-                    return;
-                }
+                source.Materials.Remove(element);
             }
-            throw new Exception("Элемент не найден");
+            else
+            {
+                throw new Exception("Элемент не найден");
+            }
         }
     }
 }
