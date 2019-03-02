@@ -65,7 +65,7 @@ namespace AbstractRepairWorkView
 
         private void услугиToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormRepair>();
+            var form = Container.Resolve<FormRepairs>();
             form.ShowDialog();
         }
 

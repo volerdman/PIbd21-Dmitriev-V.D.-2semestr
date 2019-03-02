@@ -37,6 +37,7 @@ namespace AbstractRepairWorkServiceImplement
                 instance = new DataSingletonList();
             }
             return instance;
-        }
+        }
+
     }
 }
