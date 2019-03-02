@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{91330E1A-6316-4871-802F-E2F2346A94A2}</ProjectGuid>
+    <ProjectGuid>{B263ED2E-573C-4371-8B07-403DE91C82A0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AbstractRepairWorkModel</RootNamespace>
-    <AssemblyName>AbstractRepairWorkModel</AssemblyName>
+    <RootNamespace>AbstractRepairWorkServiceImplementDataBase</RootNamespace>
+    <AssemblyName>AbstractRepairWorkServiceImplementDataBase</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -48,19 +48,48 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Booking.cs" />
-    <Compile Include="BookingStatus.cs" />
-    <Compile Include="Customer.cs" />
-    <Compile Include="Material.cs" />
-    <Compile Include="MaterialRepair.cs" />
+    <Compile Include="AbstractRepairDbContext.cs" />
+    <Compile Include="Implementations\MaterialServiceDB.cs" />
+    <Compile Include="Implementations\CustomerServiceDB.cs" />
+    <Compile Include="Implementations\RepairServiceDB.cs" />
+    <Compile Include="Implementations\ServiceMainDB.cs" />
+    <Compile Include="Implementations\StorageServiceDB.cs" />
+    <Compile Include="Migrations\201903021439478_FirstMigration.cs" />
+    <Compile Include="Migrations\201903021439478_FirstMigration.Designer.cs">
+      <DependentUpon>201903021439478_FirstMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903021614472_SecondMigration.cs" />
+    <Compile Include="Migrations\201903021614472_SecondMigration.Designer.cs">
+      <DependentUpon>201903021614472_SecondMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repair.cs" />
-    <Compile Include="Storage.cs" />
-    <Compile Include="StorageMaterial.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AbstractRepairServiceDAL\AbstractRepairServiceDAL.csproj">
+      <Project>{657B1154-0BA6-4FD0-872F-E8F28A9D78B3}</Project>
+      <Name>AbstractRepairServiceDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AbstractRepairWorkModel\AbstractRepairWorkModel.csproj">
+      <Project>{91330e1a-6316-4871-802f-e2f2346a94a2}</Project>
+      <Name>AbstractRepairWorkModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AbstractRepairWorkServiceImplement\AbstractRepairWorkServiceImplement.csproj">
+      <Project>{a56ade12-84cc-4e2e-9aff-8a99724b6523}</Project>
+      <Name>AbstractRepairWorkServiceImplement</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201903021439478_FirstMigration.resx">
+      <DependentUpon>201903021439478_FirstMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903021614472_SecondMigration.resx">
+      <DependentUpon>201903021614472_SecondMigration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

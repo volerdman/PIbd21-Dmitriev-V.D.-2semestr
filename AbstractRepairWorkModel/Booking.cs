@@ -26,5 +26,9 @@ namespace AbstractRepairWorkModel
         public DateTime CreateDate { get; set; }
 
         public DateTime? ImplementDate { get; set; }
+
+        public virtual Customer Customer { get; set; }
+
+        public virtual Repair Repair { get; set; }
     }
 }
