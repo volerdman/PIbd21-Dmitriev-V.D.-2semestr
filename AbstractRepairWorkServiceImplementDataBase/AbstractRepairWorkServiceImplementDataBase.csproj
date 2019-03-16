@@ -62,6 +62,18 @@
     <Compile Include="Migrations\201903021614472_SecondMigration.Designer.cs">
       <DependentUpon>201903021614472_SecondMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903160824088_Update_Classes_Test.cs" />
+    <Compile Include="Migrations\201903160824088_Update_Classes_Test.Designer.cs">
+      <DependentUpon>201903160824088_Update_Classes_Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903160835238_Update_Classes_Test1.cs" />
+    <Compile Include="Migrations\201903160835238_Update_Classes_Test1.Designer.cs">
+      <DependentUpon>201903160835238_Update_Classes_Test1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903160839588_Update_Classes_Test2.cs" />
+    <Compile Include="Migrations\201903160839588_Update_Classes_Test2.Designer.cs">
+      <DependentUpon>201903160839588_Update_Classes_Test2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -89,6 +101,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903021614472_SecondMigration.resx">
       <DependentUpon>201903021614472_SecondMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903160824088_Update_Classes_Test.resx">
+      <DependentUpon>201903160824088_Update_Classes_Test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903160835238_Update_Classes_Test1.resx">
+      <DependentUpon>201903160835238_Update_Classes_Test1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903160839588_Update_Classes_Test2.resx">
+      <DependentUpon>201903160839588_Update_Classes_Test2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
