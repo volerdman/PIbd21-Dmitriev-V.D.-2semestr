@@ -2,13 +2,6 @@
 using AbstractRepairServiceDAL.Interfaces;
 using AbstractRepairServiceDAL.ViewModel;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Unity;
 using Unity.Attributes;
@@ -38,9 +31,9 @@ namespace AbstractRepairWorkView
                     {
                         textBoxName.Text = view.StorageName;
                         dataGridView.DataSource = view.StorageMaterials;
-                        dataGridView.Columns[0].Visible = false;
-                        dataGridView.Columns[1].Visible = false;
-                        dataGridView.Columns[2].Visible = false;
+                        dataGridView.Columns[0].Visible = true;
+                        dataGridView.Columns[1].Visible = true;
+                        dataGridView.Columns[2].Visible = true;
                         dataGridView.Columns[3].AutoSizeMode =
                        DataGridViewAutoSizeColumnMode.Fill;
                     }

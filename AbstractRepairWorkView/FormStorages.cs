@@ -2,12 +2,6 @@
 using AbstractRepairServiceDAL.ViewModel;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Unity;
 using Unity.Attributes;
@@ -66,7 +60,7 @@ namespace AbstractRepairWorkView
             {
                 var form = Container.Resolve<FormStorage>();
                 form.Id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
-                if (form.ShowDialog() == DialogResult.OK)
+                if (form.ShowDialog() == DialogResult.Abort)
                 {
                     LoadData();
                 }
