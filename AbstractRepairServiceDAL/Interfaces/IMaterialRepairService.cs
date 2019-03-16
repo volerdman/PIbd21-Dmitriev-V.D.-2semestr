@@ -1,4 +1,3 @@
-﻿using AbstractRepairServiceDAL.BindingModel;
 using AbstractRepairServiceDAL.ViewModel;
 using System;
 using System.Collections.Generic;
