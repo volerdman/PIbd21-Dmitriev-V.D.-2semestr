@@ -112,7 +112,7 @@ namespace AbstractRepairWorkView
                     CustomerId = Convert.ToInt32(comboBoxCustomer.SelectedValue),
                     RepairId = Convert.ToInt32(comboBoxRepair.SelectedValue),
                     Count = Convert.ToInt32(textBoxAmount.Text),
-                    Sum = Convert.ToInt32(textBoxSum.Text)
+                    Sum = Convert.ToDecimal(textBoxSum.Text)
                 });
                 MessageBox.Show("Сохранение прошло успешно", "Сообщение",
                MessageBoxButtons.OK, MessageBoxIcon.Information);
