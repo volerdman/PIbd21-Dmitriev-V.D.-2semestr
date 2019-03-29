@@ -18,7 +18,6 @@ namespace AbstractRepairWorkModel
         [Required]
         public string StorageName { get; set; }
 
-        [ForeignKey("StorageId")]
-        public virtual List<Material> Materials { get; set; }
+        public virtual List<StorageMaterial> StorageMaterials { get; set; }
     }
 }

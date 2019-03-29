@@ -19,8 +19,6 @@ namespace AbstractRepairWorkModel
 
         public int Count { get; set; }
 
-        public virtual Repair Repair { get; set; }
-
         public virtual Material Material { get; set; }
     }
 }

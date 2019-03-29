@@ -50,7 +50,6 @@
     <Compile Include="BindingModel\StorageBindingModel.cs" />
     <Compile Include="BindingModel\StorageMaterialBindingModel.cs" />
     <Compile Include="Interfaces\ICustomerService.cs" />
-    <Compile Include="Interfaces\IMaterialRepairService.cs" />
     <Compile Include="Interfaces\IMaterialService.cs" />
     <Compile Include="Interfaces\IRepairService.cs" />
     <Compile Include="Interfaces\IServiceMain.cs" />

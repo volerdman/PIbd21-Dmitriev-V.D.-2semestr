@@ -37,7 +37,18 @@ namespace AbstractRepairWorkServiceImplementDataBase.Implementations
                 return new StorageViewModel
                 {
                     Id = element.Id,
-                    StorageName = element.StorageName
+                    StorageName = element.StorageName,
+                    StorageMaterials = context.StorageMaterials
+                    .Where(recPC => recPC.StorageId == element.Id)
+                    .Select(recPC => new StorageMaterialViewModel
+                    {
+                        Id = recPC.Id,
+                        StorageId = recPC.StorageId,
+                        MaterialId = recPC.MaterialId,
+                        MaterialName = recPC.Material.MaterialName,
+                        Count = recPC.Count
+                    })
+                    .ToList()
                 };
             }
             throw new Exception("Элемент не найден");

@@ -20,12 +20,9 @@ namespace AbstractRepairWorkModel
         [Required]
         public string RepairName { get; set; }
 
-        [ForeignKey("RepairId")]
         public virtual List<Booking> Bookings { get; set; }
 
-        [ForeignKey("RepairId")]
-        public virtual List<Material> Materials { get; set; }
-
+        [Required]
         public decimal Cost { get; set; }
     }
 }
