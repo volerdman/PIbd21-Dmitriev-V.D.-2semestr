@@ -179,7 +179,7 @@ namespace AbstractRepairWorkServiceImplementDataBase.Implementations
                 excelcells.Font.Size = 14;
                 excelcells = excelworksheet.get_Range("A2", "C2");
                 excelcells.Merge(Type.Missing);
-                excelcells.Value2 = "на" + DateTime.Now.ToShortDateString();
+                excelcells.Value2 = "на " + DateTime.Now.ToShortDateString();
                 excelcells.RowHeight = 20;
                 excelcells.HorizontalAlignment =
                Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
@@ -227,7 +227,7 @@ namespace AbstractRepairWorkServiceImplementDataBase.Implementations
                             }
                         }
                         excelcells = excelcells.get_Offset(0, -1);
-                        excelcells.Value2 = "Итого";
+                        excelcells.Value2 = "Итого ";
                         excelcells.Font.Bold = true;
                         excelcells = excelcells.get_Offset(0, 2);
                         excelcells.Value2 = elem.TotalCount;
@@ -328,7 +328,7 @@ namespace AbstractRepairWorkServiceImplementDataBase.Implementations
             {
                 HorizontalAlignment = Element.ALIGN_CENTER
             });
-            table.AddCell(new PdfPCell(new Phrase("Изделие", fontForCellBold))
+            table.AddCell(new PdfPCell(new Phrase("Услуга", fontForCellBold))
             {
                 HorizontalAlignment = Element.ALIGN_CENTER
             });
@@ -364,7 +364,7 @@ namespace AbstractRepairWorkServiceImplementDataBase.Implementations
                 table.AddCell(cell);
             }
             //вставляем итого
-            cell = new PdfPCell(new Phrase("Итого:", fontForCellBold))
+            cell = new PdfPCell(new Phrase("Итого: ", fontForCellBold))
             {
                 HorizontalAlignment = Element.ALIGN_RIGHT,
                 Colspan = 4,

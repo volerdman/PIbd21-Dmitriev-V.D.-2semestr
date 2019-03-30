@@ -38,7 +38,9 @@ namespace AbstractRepairWorkView
             currentContainer.RegisterType<IStorageService, StorageServiceDB>(new
            HierarchicalLifetimeManager());
             currentContainer.RegisterType<IServiceMain, ServiceMainDB>(new
-           HierarchicalLifetimeManager());
+           HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IReportService, ReportServiceDB>(new
+           HierarchicalLifetimeManager());
             return currentContainer;
         }
     }

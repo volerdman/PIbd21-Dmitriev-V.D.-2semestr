@@ -18,10 +18,11 @@ namespace AbstractRepairWorkView
 
         private readonly IServiceMain service;
 
-        public FormMain(IServiceMain service)
+        public FormMain(IServiceMain service, IReportService reportService)
         {
             InitializeComponent();
             this.service = service;
+            this.reportService = reportService;
         }
 
         private void LoadData()
