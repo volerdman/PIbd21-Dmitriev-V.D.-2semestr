@@ -14,6 +14,8 @@ namespace AbstractRepairServiceDAL.Interfaces
 
         void FinishBooking(BookingBindingModel model);
 
-        void PayBooking(BookingBindingModel model);
+        void PayBooking(BookingBindingModel model);
+
+        void PutMaterialOnStorage(StorageMaterialBindingModel model);
     }
 }

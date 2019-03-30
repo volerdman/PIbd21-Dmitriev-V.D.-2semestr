@@ -47,11 +47,13 @@
     <Compile Include="BindingModel\MaterialBindingModel.cs" />
     <Compile Include="BindingModel\MaterialRepairBindingModel.cs" />
     <Compile Include="BindingModel\RepairBindingModel.cs" />
+    <Compile Include="BindingModel\StorageBindingModel.cs" />
+    <Compile Include="BindingModel\StorageMaterialBindingModel.cs" />
     <Compile Include="Interfaces\ICustomerService.cs" />
-    <Compile Include="Interfaces\IMaterialRepairService.cs" />
     <Compile Include="Interfaces\IMaterialService.cs" />
     <Compile Include="Interfaces\IRepairService.cs" />
     <Compile Include="Interfaces\IServiceMain.cs" />
+    <Compile Include="Interfaces\IStorageService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\BookingStatusViewModel.cs" />
     <Compile Include="ViewModel\BookingViewModel.cs" />
@@ -59,6 +61,8 @@
     <Compile Include="ViewModel\MaterialRepairViewModel.cs" />
     <Compile Include="ViewModel\MaterialViewModel.cs" />
     <Compile Include="ViewModel\RepairViewModel.cs" />
+    <Compile Include="ViewModel\StorageMaterialViewModel.cs" />
+    <Compile Include="ViewModel\StorageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AbstractRepairWorkModel\AbstractRepairWorkModel.csproj">
