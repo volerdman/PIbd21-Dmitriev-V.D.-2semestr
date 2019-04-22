@@ -79,13 +79,13 @@ namespace AbstractRepairWorkServiceImplementDataBase.Implementations
                         throw new Exception("Заказ не в статусе \"Принят\"");
                     }
                     var repairMaterials = context.MaterialRepairs.Include(rec => rec.Material)
-                        .Where(rec => rec.RepairId == element.RepairId);
+                        .Where(rec => rec.RepairId == element.RepairId).ToList();
                     // списываем
                     foreach (var repairMaterial in repairMaterials)
                     {
                         int countOnStorages = repairMaterial.Count * element.Count;
                         var stockMaterials = context.StorageMaterials.Where(rec =>
-                        rec.MaterialId == repairMaterial.MaterialId);
+                        rec.MaterialId == repairMaterial.MaterialId).ToList();
                         foreach (var stockMaterial in stockMaterials)
                         {
                             // материалов на одном складе может не хватать

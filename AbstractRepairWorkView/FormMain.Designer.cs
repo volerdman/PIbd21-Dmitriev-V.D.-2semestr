@@ -75,28 +75,28 @@
             // клиентыToolStripMenuItem
             // 
             this.клиентыToolStripMenuItem.Name = "клиентыToolStripMenuItem";
-            this.клиентыToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.клиентыToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.клиентыToolStripMenuItem.Text = "Заказчики";
-            this.клиентыToolStripMenuItem.Click += new System.EventHandler(this.заказчикиToolStripMenuItem_Click);
+            this.клиентыToolStripMenuItem.Click += new System.EventHandler(this.клиентыToolStripMenuItem_Click);
             // 
             // материалыToolStripMenuItem
             // 
             this.материалыToolStripMenuItem.Name = "материалыToolStripMenuItem";
-            this.материалыToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.материалыToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.материалыToolStripMenuItem.Text = "Материалы";
-            this.материалыToolStripMenuItem.Click += new System.EventHandler(this.материалыToolStripMenuItem_Click);
+            this.материалыToolStripMenuItem.Click += new System.EventHandler(this.компонентыToolStripMenuItem_Click);
             // 
             // услугиToolStripMenuItem
             // 
             this.услугиToolStripMenuItem.Name = "услугиToolStripMenuItem";
-            this.услугиToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.услугиToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.услугиToolStripMenuItem.Text = "Услуги";
-            this.услугиToolStripMenuItem.Click += new System.EventHandler(this.услугиToolStripMenuItem_Click);
+            this.услугиToolStripMenuItem.Click += new System.EventHandler(this.изделияToolStripMenuItem_Click);
             // 
             // складыToolStripMenuItem
             // 
             this.складыToolStripMenuItem.Name = "складыToolStripMenuItem";
-            this.складыToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.складыToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.складыToolStripMenuItem.Text = "Склады";
             this.складыToolStripMenuItem.Click += new System.EventHandler(this.складыToolStripMenuItem_Click);
             // 
@@ -105,14 +105,14 @@
             this.пополнитьСкладыToolStripMenuItem.Name = "пополнитьСкладыToolStripMenuItem";
             this.пополнитьСкладыToolStripMenuItem.Size = new System.Drawing.Size(124, 20);
             this.пополнитьСкладыToolStripMenuItem.Text = "Пополнить склады";
-            this.пополнитьСкладыToolStripMenuItem.Click += new System.EventHandler(this.пополнитьСкладыToolStripMenuItem_Click);
+            this.пополнитьСкладыToolStripMenuItem.Click += new System.EventHandler(this.пополнитьСкладToolStripMenuItem_Click);
             // 
             // отчетыToolStripMenuItem
             // 
             this.отчетыToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.заказыКлиентовToolStripMenuItem,
             this.прайсУслугToolStripMenuItem,
-            this.загруженностьСкладовToolStripMenuItem,
-            this.заказыКлиентовToolStripMenuItem});
+            this.загруженностьСкладовToolStripMenuItem});
             this.отчетыToolStripMenuItem.Name = "отчетыToolStripMenuItem";
             this.отчетыToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
             this.отчетыToolStripMenuItem.Text = "Отчеты";
@@ -154,7 +154,7 @@
             this.buttonCreate.TabIndex = 2;
             this.buttonCreate.Text = "Создать заказ";
             this.buttonCreate.UseVisualStyleBackColor = true;
-            this.buttonCreate.Click += new System.EventHandler(this.buttonCreate_Click);
+            this.buttonCreate.Click += new System.EventHandler(this.buttonCreateBooking_Click);
             // 
             // buttonSend
             // 
@@ -164,7 +164,7 @@
             this.buttonSend.TabIndex = 3;
             this.buttonSend.Text = "Отправить заказ на выполнение";
             this.buttonSend.UseVisualStyleBackColor = true;
-            this.buttonSend.Click += new System.EventHandler(this.buttonSendInWork_Click);
+            this.buttonSend.Click += new System.EventHandler(this.buttonTakeBookingInWork_Click);
             // 
             // buttonReady
             // 
@@ -174,7 +174,7 @@
             this.buttonReady.TabIndex = 4;
             this.buttonReady.Text = "Заказ выполнен";
             this.buttonReady.UseVisualStyleBackColor = true;
-            this.buttonReady.Click += new System.EventHandler(this.buttonReady_Click);
+            this.buttonReady.Click += new System.EventHandler(this.buttonBookingReady_Click);
             // 
             // buttonPaid
             // 
@@ -184,7 +184,7 @@
             this.buttonPaid.TabIndex = 5;
             this.buttonPaid.Text = "Заказ оплачен";
             this.buttonPaid.UseVisualStyleBackColor = true;
-            this.buttonPaid.Click += new System.EventHandler(this.buttonPaid_Click);
+            this.buttonPaid.Click += new System.EventHandler(this.buttonPayBooking_Click);
             // 
             // buttonUpdate
             // 
@@ -194,7 +194,7 @@
             this.buttonUpdate.TabIndex = 6;
             this.buttonUpdate.Text = "Обновить список";
             this.buttonUpdate.UseVisualStyleBackColor = true;
-            this.buttonUpdate.Click += new System.EventHandler(this.buttonUpdate_Click);
+            this.buttonUpdate.Click += new System.EventHandler(this.buttonRef_Click);
             // 
             // FormMain
             // 

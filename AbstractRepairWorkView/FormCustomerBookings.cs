@@ -1,23 +1,17 @@
 ﻿using AbstractRepairServiceDAL.BindingModel;
-using AbstractRepairServiceDAL.Interfaces;
+using AbstractRepairServiceDAL.ViewModel;
 using Microsoft.Reporting.WinForms;
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
-using Unity;
-using Unity.Attributes;
 
 namespace AbstractRepairWorkView
 {
     public partial class FormCustomerBookings : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
-        private readonly IReportService service;
-
-        public FormCustomerBookings(IReportService service)
+        public FormCustomerBookings()
         {
             InitializeComponent();
-            this.service = service;
         }
         private void buttonMake_Click(object sender, EventArgs e)
         {
@@ -35,13 +29,15 @@ namespace AbstractRepairWorkView
                 " по " +
                dateTimePickerTo.Value.ToShortDateString());
                 reportViewer.LocalReport.SetParameters(parameter);
-                var dataSource = service.GetCustomerBooking(new ReportBindingModel
-                {
-                    DateFrom = dateTimePickerFrom.Value,
-                    DateTo = dateTimePickerTo.Value
-                });
+                List<CustomerBookingModel> response =
+               APICustomer.PostRequest<ReportBindingModel,
+               List<CustomerBookingModel>>("api/Report/GetCustomerBooking", new ReportBindingModel
+               {
+                   DateFrom = dateTimePickerFrom.Value,
+                   DateTo = dateTimePickerTo.Value
+               });
                 ReportDataSource source = new ReportDataSource("DataSetOrders",
-               dataSource);
+               response);
                 reportViewer.LocalReport.DataSources.Add(source);
                 reportViewer.RefreshReport();
             }
@@ -67,14 +63,15 @@ namespace AbstractRepairWorkView
             {
                 try
                 {
-                    service.SaveCustomerBooking(new ReportBindingModel
-                    {
-                        FileName = sfd.FileName,
-                        DateFrom = dateTimePickerFrom.Value,
-                        DateTo = dateTimePickerTo.Value
-                    });
+                    APICustomer.PostRequest<ReportBindingModel,
+                   bool>("api/Report/SaveCustomerBooking", new ReportBindingModel
+                   {
+                       FileName = sfd.FileName,
+                       DateFrom = dateTimePickerFrom.Value,
+                       DateTo = dateTimePickerTo.Value
+                   });
                     MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+                   MessageBoxIcon.Information);
                 }
                 catch (Exception ex)
                 {
@@ -82,12 +79,6 @@ namespace AbstractRepairWorkView
                    MessageBoxIcon.Error);
                 }
             }
-        }
-
-        private void FormCustomerBookings_Load(object sender, EventArgs e)
-        {
-
-            this.reportViewer.RefreshReport();
         }
     }
 }

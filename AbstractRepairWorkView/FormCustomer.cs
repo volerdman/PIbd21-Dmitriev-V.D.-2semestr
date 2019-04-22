@@ -1,41 +1,27 @@
 ﻿using AbstractRepairServiceDAL.BindingModel;
-using AbstractRepairServiceDAL.Interfaces;
 using AbstractRepairServiceDAL.ViewModel;
 using System;
 using System.Windows.Forms;
-using Unity;
-using Unity.Attributes;
 
 namespace AbstractRepairWorkView
 {
     public partial class FormCustomer : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
-
         public int Id { set { id = value; } }
-
-        private readonly ICustomerService service;
-
         private int? id;
-
-        public FormCustomer(ICustomerService service)
+        public FormCustomer()
         {
             InitializeComponent();
-            this.service = service;
         }
-
         private void FormCustomer_Load(object sender, EventArgs e)
         {
             if (id.HasValue)
             {
                 try
                 {
-                    CustomerViewModel view = service.ElementGet(id.Value);
-                    if (view != null)
-                    {
-                        textBoxFIO.Text = view.CustomerFIO;
-                    }
+                    CustomerViewModel client =
+                   APICustomer.GetRequest<CustomerViewModel>("api/Customer/Get/" + id.Value);
+                    textBoxFIO.Text = client.CustomerFIO;
                 }
                 catch (Exception ex)
                 {
@@ -44,7 +30,6 @@ namespace AbstractRepairWorkView
                 }
             }
         }
-
         private void buttonSave_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(textBoxFIO.Text))
@@ -57,18 +42,20 @@ namespace AbstractRepairWorkView
             {
                 if (id.HasValue)
                 {
-                    service.UpdateElement(new CustomerBindingModel
-                    {
-                        Id = id.Value,
-                        CustomerFIO = textBoxFIO.Text
-                    });
+                    APICustomer.PostRequest<CustomerBindingModel,
+                   bool>("api/Customer/UpdElement", new CustomerBindingModel
+                   {
+                       Id = id.Value,
+                       CustomerFIO = textBoxFIO.Text
+                   });
                 }
                 else
                 {
-                    service.AddElement(new CustomerBindingModel
-                    {
-                        CustomerFIO = textBoxFIO.Text
-                    });
+                    APICustomer.PostRequest<CustomerBindingModel,
+                   bool>("api/Customer/AddElement", new CustomerBindingModel
+                   {
+                       CustomerFIO = textBoxFIO.Text
+                   });
                 }
                 MessageBox.Show("Сохранение прошло успешно", "Сообщение",
                MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -81,7 +68,6 @@ namespace AbstractRepairWorkView
                MessageBoxIcon.Error);
             }
         }
-
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;

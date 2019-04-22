@@ -1,24 +1,17 @@
-﻿using AbstractRepairServiceDAL.Interfaces;
+﻿using AbstractRepairServiceDAL.BindingModel;
+using AbstractRepairServiceDAL.Interfaces;
 using AbstractRepairServiceDAL.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using Unity;
-using Unity.Attributes;
 
 namespace AbstractRepairWorkView
 {
     public partial class FormRepairs : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
-
-        private readonly IRepairService service;
-
-        public FormRepairs(IRepairService service)
+        public FormRepairs()
         {
             InitializeComponent();
-            this.service = service;
         }
 
         private void FormRepairs_Load(object sender, EventArgs e)
@@ -30,7 +23,7 @@ namespace AbstractRepairWorkView
         {
             try
             {
-                List<RepairViewModel> list = service.ListGet();
+                List<RepairViewModel> list = APICustomer.GetRequest<List<RepairViewModel>>("api/Repair/GetList/");
                 if (list != null)
                 {
                     dataGridView.DataSource = list;
@@ -48,7 +41,7 @@ namespace AbstractRepairWorkView
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormRepair>();
+            var form = new FormRepair();
             if (form.ShowDialog() == DialogResult.OK)
             {
                 LoadData();
@@ -59,7 +52,7 @@ namespace AbstractRepairWorkView
         {
             if (dataGridView.SelectedRows.Count == 1)
             {
-                var form = Container.Resolve<FormRepair>();
+                var form = new FormRepair();
                 form.Id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                 if (form.ShowDialog() == DialogResult.OK)
                 {
@@ -77,7 +70,8 @@ namespace AbstractRepairWorkView
                     int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                     try
                     {
-                        service.DeleteElement(id);
+                        APICustomer.PostRequest<RepairBindingModel, bool>("api/Repair/DelElement",
+                            new RepairBindingModel { Id = id });
                     }
                     catch (Exception ex)
                     {

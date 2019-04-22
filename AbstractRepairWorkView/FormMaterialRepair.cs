@@ -2,41 +2,30 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using Unity;
 using AbstractRepairServiceDAL.Interfaces;
-using Unity.Attributes;
 
 namespace AbstractRepairWorkView
 {
     public partial class FormMaterialRepair : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
-
         public MaterialRepairViewModel Model
         {
             set { model = value; }
-            get
-            {
-                return model;
-            }
+            get { return model; }
         }
-
-        private readonly IMaterialService service;
 
         private MaterialRepairViewModel model;
 
-        public FormMaterialRepair(IMaterialService service)
+        public FormMaterialRepair()
         {
             InitializeComponent();
-            this.service = service;
         }
 
         private void FormMaterialRepair_Load(object sender, EventArgs e)
         {
             try
             {
-                List<MaterialViewModel> list = service.ListGet();
+                List<MaterialViewModel> list = APICustomer.GetRequest<List<MaterialViewModel>>("api/Material/GetList");
                 if (list != null)
                 {
                     comboBoxMaterial.DisplayMember = "MaterialName";
