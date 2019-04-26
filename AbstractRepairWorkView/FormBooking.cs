@@ -34,6 +34,14 @@ namespace AbstractRepairWorkView
                     comboBoxRepair.DataSource = listR;
                     comboBoxRepair.SelectedItem = null;
                 }
+                List<ExecutorViewModel> listE = APICustomer.GetRequest<List<ExecutorViewModel>>("api/Executor/GetList");
+                if (listE != null)
+                {
+                    comboBoxExecutor.DisplayMember = "ExecutorFIO";
+                    comboBoxExecutor.ValueMember = "Id";
+                    comboBoxExecutor.DataSource = listE;
+                    comboBoxExecutor.SelectedItem = null;
+                }
             }
             catch (Exception ex)
             {
@@ -91,12 +99,19 @@ namespace AbstractRepairWorkView
                     MessageBoxIcon.Error);
                 return;
             }
+            if (comboBoxExecutor.SelectedValue == null)
+            {
+                MessageBox.Show("Выберите сотрудника", "Ошибка", MessageBoxButtons.OK,
+               MessageBoxIcon.Error);
+                return;
+            }
             try
             {
                 APICustomer.PostRequest<BookingBindingModel, bool>("api/Main/CreateBooking", new BookingBindingModel
                 {
                     CustomerId = Convert.ToInt32(comboBoxCustomer.SelectedValue),
                     RepairId = Convert.ToInt32(comboBoxRepair.SelectedValue),
+                    ExecutorId = Convert.ToInt32(comboBoxExecutor.SelectedValue),
                     Count = Convert.ToInt32(textBoxAmount.Text),
                     Sum = Convert.ToDecimal(textBoxSum.Text)
                 });

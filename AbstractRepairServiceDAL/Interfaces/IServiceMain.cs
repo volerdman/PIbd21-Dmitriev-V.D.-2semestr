@@ -8,6 +8,8 @@ namespace AbstractRepairServiceDAL.Interfaces
     {
         List<BookingViewModel> ListGet();
 
+        List<BookingViewModel> GetFreeBookings();
+
         void CreateBooking(BookingBindingModel model);
 
         void TakeBookingInWork(BookingBindingModel model);

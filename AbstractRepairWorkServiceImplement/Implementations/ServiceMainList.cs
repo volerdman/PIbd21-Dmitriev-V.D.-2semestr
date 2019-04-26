@@ -155,5 +155,16 @@ namespace AbstractRepairsWorkServiceImplement.Implementations
                 });
             }
         }
+
+        public List<BookingViewModel> GetFreeBookings()
+        {
+            List<BookingViewModel> result = source.Bookings
+                .Select(rec => new BookingViewModel
+                {
+                    Id = rec.Id
+                })
+                .ToList();
+            return result;
+        }
     }
 }

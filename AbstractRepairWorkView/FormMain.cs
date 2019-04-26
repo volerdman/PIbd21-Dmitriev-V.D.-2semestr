@@ -55,6 +55,12 @@ namespace AbstractRepairWorkView
             var form = new FormStorages();
             form.ShowDialog();
         }
+
+        private void сотрудникиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = new FormExecutors();
+            form.ShowDialog();
+        }
         private void пополнитьСкладToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = new FormPutOnStorage();
@@ -65,48 +71,6 @@ namespace AbstractRepairWorkView
             var form = new FormBooking();
             form.ShowDialog();
             LoadData();
-        }
-        private void buttonTakeBookingInWork_Click(object sender, EventArgs e)
-        {
-            if (dataGridView.SelectedRows.Count == 1)
-            {
-                int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
-                try
-                {
-                    APICustomer.PostRequest<BookingBindingModel,
-                   bool>("api/Main/TakeBookingInWork", new BookingBindingModel
-                   {
-                       Id = id
-                   });
-                   LoadData();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                   MessageBoxIcon.Error);
-                }
-            }
-        }
-        private void buttonBookingReady_Click(object sender, EventArgs e)
-        {
-            if (dataGridView.SelectedRows.Count == 1)
-            {
-                int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
-                try
-                {
-                    APICustomer.PostRequest<BookingBindingModel,
-                   bool>("api/Main/FinishBooking", new BookingBindingModel
-                   {
-                       Id = id
-                   });
-                    LoadData();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                   MessageBoxIcon.Error);
-                }
-            }
         }
         private void buttonPayBooking_Click(object sender, EventArgs e)
         {
@@ -168,6 +132,21 @@ namespace AbstractRepairWorkView
         {
             var form = new FormCustomerBookings();
             form.ShowDialog();
+        }
+
+        private void запускРаботToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                APICustomer.PostRequest<int?, bool>("api/Main/StartWork", null);
+                MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
+               MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
+               MessageBoxIcon.Error);
+            }
         }
     }
 }
