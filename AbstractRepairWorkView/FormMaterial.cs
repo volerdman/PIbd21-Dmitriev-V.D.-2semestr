@@ -1,41 +1,27 @@
 ﻿using AbstractRepairServiceDAL.BindingModel;
-using AbstractRepairServiceDAL.Interfaces;
 using AbstractRepairServiceDAL.ViewModel;
 using System;
 using System.Windows.Forms;
-using Unity;
-using Unity.Attributes;
 
 namespace AbstractRepairWorkView
 {
     public partial class FormMaterial : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
-
         public int Id { set { id = value; } }
-
-        private readonly IMaterialService service;
-
         private int? id;
-
-        public FormMaterial(IMaterialService service)
+        public FormMaterial()
         {
             InitializeComponent();
-            this.service = service;
         }
-
         private void FormMaterial_Load(object sender, EventArgs e)
         {
             if (id.HasValue)
             {
                 try
                 {
-                    MaterialViewModel view = service.ElementGet(id.Value);
-                    if (view != null)
-                    {
-                        textBoxName.Text = view.MaterialName;
-                    }
+                    MaterialViewModel material =
+                   APICustomer.GetRequest<MaterialViewModel>("api/Material/Get/" + id.Value);
+                    textBoxName.Text = material.MaterialName;
                 }
                 catch (Exception ex)
                 {
@@ -44,12 +30,11 @@ namespace AbstractRepairWorkView
                 }
             }
         }
-
         private void buttonSave_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(textBoxName.Text))
             {
-                MessageBox.Show("Заполните ФИО", "Ошибка", MessageBoxButtons.OK,
+                MessageBox.Show("Заполните название", "Ошибка", MessageBoxButtons.OK,
                MessageBoxIcon.Error);
                 return;
             }
@@ -57,18 +42,20 @@ namespace AbstractRepairWorkView
             {
                 if (id.HasValue)
                 {
-                    service.UpdateElement(new MaterialBindingModel
-                    {
-                        Id = id.Value,
-                        MaterialName = textBoxName.Text
-                    });
+                    APICustomer.PostRequest<MaterialBindingModel,
+                   bool>("api/Material/UpdElement", new MaterialBindingModel
+                   {
+                       Id = id.Value,
+                       MaterialName = textBoxName.Text
+                   });
                 }
                 else
                 {
-                    service.AddElement(new MaterialBindingModel
-                    {
-                        MaterialName = textBoxName.Text
-                    });
+                    APICustomer.PostRequest<MaterialBindingModel,
+                   bool>("api/Material/AddElement", new MaterialBindingModel
+                   {
+                       MaterialName = textBoxName.Text
+                   });
                 }
                 MessageBox.Show("Сохранение прошло успешно", "Сообщение",
                MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -81,7 +68,6 @@ namespace AbstractRepairWorkView
                MessageBoxIcon.Error);
             }
         }
-
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;

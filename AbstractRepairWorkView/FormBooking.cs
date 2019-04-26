@@ -4,35 +4,21 @@ using AbstractRepairServiceDAL.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using Unity;
-using Unity.Attributes;
 
 namespace AbstractRepairWorkView
 {
     public partial class FormBooking : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
-
-        private readonly ICustomerService serviceC;
-
-        private readonly IRepairService serviceR;
-
-        private readonly IServiceMain serviceM;
-
-        public FormBooking(ICustomerService serviceC, IRepairService serviceR, IServiceMain serviceM)
+        public FormBooking()
         {
             InitializeComponent();
-            this.serviceC = serviceC;
-            this.serviceR = serviceR;
-            this.serviceM = serviceM;
         }
 
         private void FormBooking_Load(object sender, EventArgs e)
         {
             try
             {
-                List<CustomerViewModel> listC = serviceC.ListGet();
+                List<CustomerViewModel> listC = APICustomer.GetRequest<List<CustomerViewModel>>("api/Customer/GetList");
                 if (listC != null)
                 {
                     comboBoxCustomer.DisplayMember = "CustomerFIO";
@@ -40,7 +26,7 @@ namespace AbstractRepairWorkView
                     comboBoxCustomer.DataSource = listC;
                     comboBoxCustomer.SelectedItem = null;
                 }
-                List<RepairViewModel> listR = serviceR.ListGet();
+                List<RepairViewModel> listR = APICustomer.GetRequest<List<RepairViewModel>>("api/Repair/GetList");
                 if (listR != null)
                 {
                     comboBoxRepair.DisplayMember = "RepairName";
@@ -63,7 +49,7 @@ namespace AbstractRepairWorkView
                 try
                 {
                     int id = Convert.ToInt32(comboBoxRepair.SelectedValue);
-                    RepairViewModel product = serviceR.ElementGet(id);
+                    RepairViewModel product = APICustomer.GetRequest<RepairViewModel>("api/Repair/Get/" + id);
                     int count = Convert.ToInt32(textBoxAmount.Text);
                     textBoxSum.Text = (count * product.Cost).ToString();
                 }
@@ -107,7 +93,7 @@ namespace AbstractRepairWorkView
             }
             try
             {
-                serviceM.CreateBooking(new BookingBindingModel
+                APICustomer.PostRequest<BookingBindingModel, bool>("api/Main/CreateBooking", new BookingBindingModel
                 {
                     CustomerId = Convert.ToInt32(comboBoxCustomer.SelectedValue),
                     RepairId = Convert.ToInt32(comboBoxRepair.SelectedValue),

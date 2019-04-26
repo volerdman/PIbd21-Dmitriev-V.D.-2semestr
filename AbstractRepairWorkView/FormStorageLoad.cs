@@ -1,30 +1,23 @@
 ﻿using AbstractRepairServiceDAL.BindingModel;
-using AbstractRepairServiceDAL.Interfaces;
+using AbstractRepairServiceDAL.ViewModel;
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
-using Unity;
-using Unity.Attributes;
 
 namespace AbstractRepairWorkView
 {
     public partial class FormStorageLoad : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
-
-        private readonly IReportService service;
-
-        public FormStorageLoad(IReportService service)
+        public FormStorageLoad()
         {
             InitializeComponent();
-            this.service = service;
         }
 
         private void FormStorageLoad_Load(object sender, EventArgs e)
         {
             try
             {
-                var dict = service.GetStorageLoad();
+                var dict = APICustomer.GetRequest<List<StorageLoadViewModel>>("api/Report/GetStorageLoad");
                 if (dict != null)
                 {
                     dataGridView.Rows.Clear();
@@ -57,7 +50,7 @@ namespace AbstractRepairWorkView
             {
                 try
                 {
-                    service.SaveStorageLoad(new ReportBindingModel
+                    APICustomer.PostRequest<ReportBindingModel, bool>("api/Report/SaveStorageLoad", new ReportBindingModel
                     {
                         FileName = sfd.FileName
                     });

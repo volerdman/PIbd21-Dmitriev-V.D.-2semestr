@@ -122,7 +122,6 @@
             this.Controls.Add(this.panel1);
             this.Name = "FormCustomerBookings";
             this.Text = "FormCustomerBookings";
-            this.Load += new System.EventHandler(this.FormCustomerBookings_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);

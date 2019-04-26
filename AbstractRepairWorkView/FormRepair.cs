@@ -4,28 +4,20 @@ using AbstractRepairServiceDAL.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using Unity;
-using Unity.Attributes;
 
 namespace AbstractRepairWorkView
 {
     public partial class FormRepair : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
-
         public int Id { set { id = value; } }
-
-        private readonly IRepairService service;
 
         private int? id;
 
         private List<MaterialRepairViewModel> repairMaterial;
 
-        public FormRepair(IRepairService service)
+        public FormRepair()
         {
             InitializeComponent();
-            this.service = service;
         }
 
         private void FormRepair_Load(object sender, EventArgs e)
@@ -34,7 +26,7 @@ namespace AbstractRepairWorkView
             {
                 try
                 {
-                    RepairViewModel view = service.ElementGet(id.Value);
+                    RepairViewModel view = APICustomer.GetRequest<RepairViewModel>("api/Repair/Get/" + id.Value);
                     if (view != null)
                     {
                         textBoxName.Text = view.RepairName;
@@ -79,7 +71,7 @@ namespace AbstractRepairWorkView
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormMaterialRepair>();
+            var form = new FormMaterialRepair();
             if (form.ShowDialog() == DialogResult.OK)
             {
                 if (form.Model != null)
@@ -98,7 +90,7 @@ namespace AbstractRepairWorkView
         {
             if (dataGridView.SelectedRows.Count == 1)
             {
-                var form = Container.Resolve<FormMaterialRepair>();
+                var form = new FormMaterialRepair();
                 form.Model =
                repairMaterial[dataGridView.SelectedRows[0].Cells[0].RowIndex];
                 if (form.ShowDialog() == DialogResult.OK)
@@ -171,7 +163,7 @@ namespace AbstractRepairWorkView
                 }
                 if (id.HasValue)
                 {
-                    service.UpdateElement(new RepairBindingModel
+                    APICustomer.PostRequest<RepairBindingModel, bool>("api/Repair/UpdateElement", new RepairBindingModel
                     {
                         Id = id.Value,
                         RepairName = textBoxName.Text,
@@ -181,7 +173,7 @@ namespace AbstractRepairWorkView
                 }
                 else
                 {
-                    service.AddElement(new RepairBindingModel
+                    APICustomer.PostRequest<RepairBindingModel, bool>("api/Repair/AddElement", new RepairBindingModel
                     {
                         RepairName = textBoxName.Text,
                         Cost = Convert.ToInt32(textBoxCost.Text),

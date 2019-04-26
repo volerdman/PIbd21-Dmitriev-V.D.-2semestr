@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using Unity;
-using Unity.Attributes;
 using AbstractRepairServiceDAL.Interfaces;
 using AbstractRepairServiceDAL.ViewModel;
 using AbstractRepairServiceDAL.BindingModel;
@@ -11,27 +9,15 @@ namespace AbstractRepairWorkView
 {
     public partial class FormPutOnStorage : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
-
-        private readonly IStorageService serviceS;
-
-        private readonly IMaterialService serviceM;
-
-        private readonly IServiceMain serviceSM;
-
-        public FormPutOnStorage(IStorageService serviceS, IMaterialService serviceM,IServiceMain serviceSM)
+        public FormPutOnStorage()
         {
             InitializeComponent();
-            this.serviceS = serviceS;
-            this.serviceM = serviceM;
-            this.serviceSM = serviceSM;
         }
         private void FormPutOnStorage_Load(object sender, EventArgs e)
         {
             try
             {
-                List<MaterialViewModel> listC = serviceM.ListGet();
+                List<MaterialViewModel> listC = APICustomer.GetRequest<List<MaterialViewModel>>("api/Material/GetList");
                 if (listC != null)
                 {
                     comboBoxMaterial.DisplayMember = "MaterialName";
@@ -39,7 +25,7 @@ namespace AbstractRepairWorkView
                     comboBoxMaterial.DataSource = listC;
                     comboBoxMaterial.SelectedItem = null;
                 }
-                List<StorageViewModel> listS = serviceS.GetList();
+                List<StorageViewModel> listS = APICustomer.GetRequest<List<StorageViewModel>>("api/Storage/GetList");
                 if (listS != null)
                 {
                     comboBoxStorage.DisplayMember = "StorageName";
@@ -76,7 +62,7 @@ namespace AbstractRepairWorkView
             }
             try
             {
-                serviceSM.PutMaterialOnStorage(new StorageMaterialBindingModel
+                APICustomer.PostRequest<StorageMaterialBindingModel, bool>("api/Main/PutMaterialOnStorage", new StorageMaterialBindingModel
                 {
                     MaterialId = Convert.ToInt32(comboBoxMaterial.SelectedValue),
                     StorageId = Convert.ToInt32(comboBoxStorage.SelectedValue),
