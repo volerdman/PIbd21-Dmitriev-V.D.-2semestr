@@ -23,7 +23,8 @@ namespace AbstractRepairWorkServiceImplementDataBase.Implementations
            CustomerViewModel
             {
                 Id = rec.Id,
-                CustomerFIO = rec.CustomerFIO
+                CustomerFIO = rec.CustomerFIO,
+                Mail = rec.Mail
             })
             .ToList();
             return result;
@@ -37,7 +38,18 @@ namespace AbstractRepairWorkServiceImplementDataBase.Implementations
                 return new CustomerViewModel
                 {
                     Id = element.Id,
-                    CustomerFIO = element.CustomerFIO
+                    CustomerFIO = element.CustomerFIO,
+                    Mail = element.Mail,
+                    Messages = context.InfoMessages
+                                 .Where(recM => recM.CustomerId == element.Id)
+                                .Select(recM => new InfoMessageViewModel
+                                {
+                                    MessageId = recM.MessageId,
+                                    DateDelivery = recM.DateDelivery,
+                                    Subject = recM.Subject,
+                                    Body = recM.Body
+                                })
+                                .ToList()
                 };
             }
             throw new Exception("Элемент не найден");
@@ -53,7 +65,8 @@ namespace AbstractRepairWorkServiceImplementDataBase.Implementations
             }
             context.Customers.Add(new Customer
             {
-                CustomerFIO = model.CustomerFIO
+                CustomerFIO = model.CustomerFIO,
+                Mail = model.Mail
             });
             context.SaveChanges();
         }
@@ -72,6 +85,7 @@ namespace AbstractRepairWorkServiceImplementDataBase.Implementations
                 throw new Exception("Элемент не найден");
             }
             element.CustomerFIO = model.CustomerFIO;
+            element.Mail = model.Mail;
             context.SaveChanges();
         }
 

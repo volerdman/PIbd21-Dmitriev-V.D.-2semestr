@@ -34,5 +34,7 @@ namespace AbstractRepairWorkServiceImplementDataBase
         public virtual DbSet<Storage> Storages { get; set; }
 
         public virtual DbSet<StorageMaterial> StorageMaterials { get; set; }
+
+        public virtual DbSet<InfoMessage> InfoMessages { get; set; }
     }
 }
