@@ -44,6 +44,7 @@ namespace AbstractRepairsWorkServiceImplement.Implementations
                 Id = maxId + 1,
                 CustomerId = model.CustomerId,
                 RepairId = model.RepairId,
+                ExecutorId = model.ExecutorId,
                 CreateDate = DateTime.Now,
                 Count = model.Count,
                 Sum = model.Sum,

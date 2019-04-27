@@ -38,8 +38,6 @@
             this.comboBoxRepair = new System.Windows.Forms.ComboBox();
             this.textBoxAmount = new System.Windows.Forms.TextBox();
             this.textBoxSum = new System.Windows.Forms.TextBox();
-            this.labelExecutor = new System.Windows.Forms.Label();
-            this.comboBoxExecutor = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // buttonSave
@@ -92,7 +90,7 @@
             // labelSum
             // 
             this.labelSum.AutoSize = true;
-            this.labelSum.Location = new System.Drawing.Point(15, 195);
+            this.labelSum.Location = new System.Drawing.Point(15, 151);
             this.labelSum.Name = "labelSum";
             this.labelSum.Size = new System.Drawing.Size(44, 13);
             this.labelSum.TabIndex = 5;
@@ -125,36 +123,17 @@
             // 
             // textBoxSum
             // 
-            this.textBoxSum.Location = new System.Drawing.Point(101, 192);
+            this.textBoxSum.Location = new System.Drawing.Point(101, 144);
             this.textBoxSum.Name = "textBoxSum";
             this.textBoxSum.ReadOnly = true;
             this.textBoxSum.Size = new System.Drawing.Size(193, 20);
             this.textBoxSum.TabIndex = 9;
-            // 
-            // labelExecutor
-            // 
-            this.labelExecutor.AutoSize = true;
-            this.labelExecutor.Location = new System.Drawing.Point(15, 150);
-            this.labelExecutor.Name = "labelExecutor";
-            this.labelExecutor.Size = new System.Drawing.Size(63, 13);
-            this.labelExecutor.TabIndex = 10;
-            this.labelExecutor.Text = "Сотрудник:";
-            // 
-            // comboBoxExecutor
-            // 
-            this.comboBoxExecutor.FormattingEnabled = true;
-            this.comboBoxExecutor.Location = new System.Drawing.Point(101, 147);
-            this.comboBoxExecutor.Name = "comboBoxExecutor";
-            this.comboBoxExecutor.Size = new System.Drawing.Size(193, 21);
-            this.comboBoxExecutor.TabIndex = 11;
             // 
             // FormBooking
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(310, 252);
-            this.Controls.Add(this.comboBoxExecutor);
-            this.Controls.Add(this.labelExecutor);
             this.Controls.Add(this.textBoxSum);
             this.Controls.Add(this.textBoxAmount);
             this.Controls.Add(this.comboBoxRepair);
@@ -185,7 +164,5 @@
         private System.Windows.Forms.ComboBox comboBoxRepair;
         private System.Windows.Forms.TextBox textBoxAmount;
         private System.Windows.Forms.TextBox textBoxSum;
-        private System.Windows.Forms.Label labelExecutor;
-        private System.Windows.Forms.ComboBox comboBoxExecutor;
     }
 }

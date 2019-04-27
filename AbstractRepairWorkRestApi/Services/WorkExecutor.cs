@@ -15,7 +15,7 @@ namespace AbstractRepairWorkRestApi.Services
         private readonly int _executorId;
         private readonly int _bookingId;
         // семафор
-        static Semaphore _sem = new Semaphore(3, 3);
+        static Semaphore _sem = new Semaphore(1, 1);
         Thread myThread;
         public WorkExecutor(IServiceMain service, IExecutorService
        serviceExecutor, int executorId, int bookingId)
@@ -46,7 +46,7 @@ namespace AbstractRepairWorkRestApi.Services
                 // забиваем мастерскую
                 _sem.WaitOne();
                 // Типа выполняем
-                Thread.Sleep(10000);
+                Thread.Sleep(1000);
                 _service.FinishBooking(new BookingBindingModel
                 {
                     Id = _bookingId
@@ -63,4 +63,4 @@ namespace AbstractRepairWorkRestApi.Services
             }
         }
     }
-}
+}
