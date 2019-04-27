@@ -60,7 +60,8 @@ namespace AbstractRepairWorkView
         {
             var form = new FormExecutors();
             form.ShowDialog();
-        }
+        }
+
         private void пополнитьСкладToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = new FormPutOnStorage();

@@ -54,14 +54,14 @@ serviceExecutor)
         public void StartWork()
         {
             List<BookingViewModel> bookings = _service.GetFreeBookings();
-            foreach (var order in bookings)
+            foreach (var booking in bookings)
             {
                 ExecutorViewModel impl = _serviceExecutor.GetFreeWorker();
                 if (impl == null)
                 {
                     throw new Exception("Нет сотрудников");
                 }
-                new WorkExecutor(_service, _serviceExecutor, impl.Id, order.Id);
+                new WorkExecutor(_service, _serviceExecutor, impl.Id, booking.Id);
             }
         }
     }
