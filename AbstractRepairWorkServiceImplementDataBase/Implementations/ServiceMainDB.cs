@@ -42,7 +42,9 @@ namespace AbstractRepairWorkServiceImplementDataBase.Implementations
                 Count = rec.Count,
                 Sum = rec.Sum,
                 CustomerFIO = rec.Customer.CustomerFIO,
-                RepairName = rec.Repair.RepairName
+                RepairName = rec.Repair.RepairName,
+                ExecutorId = rec.ExecutorId,
+                ExecutorFIO = rec.Executor.ExecutorFIO
             })
             .ToList();
             return result;
@@ -53,6 +55,7 @@ namespace AbstractRepairWorkServiceImplementDataBase.Implementations
             context.Bookings.Add(new Booking
             {
                 CustomerId = model.CustomerId,
+                ExecutorId = model.ExecutorId,
                 RepairId = model.RepairId,
                 CreateDate = DateTime.Now,
                 Count = model.Count,
@@ -111,6 +114,7 @@ namespace AbstractRepairWorkServiceImplementDataBase.Implementations
                          }
                     }
                     element.ImplementDate = DateTime.Now;
+                    element.ExecutorId = model.ExecutorId;
                     element.Status = BookingStatus.Выполняется;
                     context.SaveChanges();
                     transaction.Commit();
@@ -171,6 +175,19 @@ namespace AbstractRepairWorkServiceImplementDataBase.Implementations
                 });
             }
             context.SaveChanges();
+        }
+
+        public List<BookingViewModel> GetFreeBookings()
+        {
+            List<BookingViewModel> result = context.Bookings
+            .Where(x => x.Status == BookingStatus.Принят || x.Status ==
+           BookingStatus.НедостаточноРесурсов)
+            .Select(rec => new BookingViewModel
+            {
+                Id = rec.Id
+            })
+            .ToList();
+            return result;
         }
     }
 }

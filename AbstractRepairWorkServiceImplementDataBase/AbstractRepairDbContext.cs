@@ -27,6 +27,8 @@ namespace AbstractRepairWorkServiceImplementDataBase
 
         public virtual DbSet<Repair> Repairs { get; set; }
 
+        public virtual DbSet<Executor> Executors { get; set; }
+
         public virtual DbSet<MaterialRepair> MaterialRepairs { get; set; }
 
         public virtual DbSet<Storage> Storages { get; set; }

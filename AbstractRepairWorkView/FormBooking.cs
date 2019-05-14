@@ -91,6 +91,7 @@ namespace AbstractRepairWorkView
                     MessageBoxIcon.Error);
                 return;
             }
+          
             try
             {
                 APICustomer.PostRequest<BookingBindingModel, bool>("api/Main/CreateBooking", new BookingBindingModel

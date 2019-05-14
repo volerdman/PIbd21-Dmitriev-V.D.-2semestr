@@ -17,6 +17,8 @@ namespace AbstractRepairWorkModel
 
         public int RepairId { get; set; }
 
+        public int? ExecutorId { get; set; }
+
         public int Count { get; set; }
 
         public decimal Sum { get; set; }
@@ -30,5 +32,7 @@ namespace AbstractRepairWorkModel
         public virtual Customer Customer { get; set; }
 
         public virtual Repair Repair { get; set; }
+
+        public virtual Executor Executor { get; set; }
     }
 }

@@ -26,6 +26,12 @@ namespace AbstractRepairServiceDAL.ViewModel
         public string RepairName { get; set; }
 
         [DataMember]
+        public int? ExecutorId { get; set; }
+
+        [DataMember]
+        public string ExecutorFIO { get; set; }
+
+        [DataMember]
         public int Count { get; set; }
 
         [DataMember]

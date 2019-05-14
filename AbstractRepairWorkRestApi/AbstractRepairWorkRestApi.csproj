@@ -114,6 +114,7 @@
     <Compile Include="App_Start\UnityWebApiActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\ExecutorController.cs" />
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Controllers\MaterialController.cs" />
     <Compile Include="Controllers\RepairController.cs" />
@@ -123,6 +124,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\WorkExecutor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

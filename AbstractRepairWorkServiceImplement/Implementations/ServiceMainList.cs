@@ -44,6 +44,7 @@ namespace AbstractRepairsWorkServiceImplement.Implementations
                 Id = maxId + 1,
                 CustomerId = model.CustomerId,
                 RepairId = model.RepairId,
+                ExecutorId = model.ExecutorId,
                 CreateDate = DateTime.Now,
                 Count = model.Count,
                 Sum = model.Sum,
@@ -154,6 +155,17 @@ namespace AbstractRepairsWorkServiceImplement.Implementations
                     Count = model.Count
                 });
             }
+        }
+
+        public List<BookingViewModel> GetFreeBookings()
+        {
+            List<BookingViewModel> result = source.Bookings
+                .Select(rec => new BookingViewModel
+                {
+                    Id = rec.Id
+                })
+                .ToList();
+            return result;
         }
     }
 }

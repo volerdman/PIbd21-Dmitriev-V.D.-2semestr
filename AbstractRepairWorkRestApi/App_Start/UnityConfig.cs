@@ -56,6 +56,8 @@ namespace AbstractRepairWorkRestApi
            HierarchicalLifetimeManager());
             container.RegisterType<IReportService, ReportServiceDB>(new
            HierarchicalLifetimeManager());
+            container.RegisterType<IExecutorService, ExecutorServiceDB>(new
+          HierarchicalLifetimeManager());
         }
     }
-}
+}
