@@ -93,9 +93,9 @@
     <Compile Include="Migrations\201904261801169_AddExecutor.Designer.cs">
       <DependentUpon>201904261801169_AddExecutor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201904270807366_MessageInfo.cs" />
-    <Compile Include="Migrations\201904270807366_MessageInfo.Designer.cs">
-      <DependentUpon>201904270807366_MessageInfo.cs</DependentUpon>
+    <Compile Include="Migrations\201905290621568_MessageInfo.cs" />
+    <Compile Include="Migrations\201905290621568_MessageInfo.Designer.cs">
+      <DependentUpon>201905290621568_MessageInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -143,8 +143,8 @@
     <EmbeddedResource Include="Migrations\201904261801169_AddExecutor.resx">
       <DependentUpon>201904261801169_AddExecutor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201904270807366_MessageInfo.resx">
-      <DependentUpon>201904270807366_MessageInfo.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201905290621568_MessageInfo.resx">
+      <DependentUpon>201905290621568_MessageInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

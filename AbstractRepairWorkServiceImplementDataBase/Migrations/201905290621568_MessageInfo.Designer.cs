@@ -13,7 +13,7 @@ namespace AbstractRepairWorkServiceImplementDataBase.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201904270807366_MessageInfo"; }
+            get { return "201905290621568_MessageInfo"; }
         }
         
         string IMigrationMetadata.Source
