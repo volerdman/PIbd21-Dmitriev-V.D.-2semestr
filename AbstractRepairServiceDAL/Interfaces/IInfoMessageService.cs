@@ -1,19 +1,20 @@
-﻿using AbstractRepairServiceDAL.BindingModel;
+﻿using AbstractRepairServiceDAL.Attributies;
+using AbstractRepairServiceDAL.BindingModel;
 using AbstractRepairServiceDAL.ViewModel;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AbstractRepairServiceDAL.Interfaces
 {
+    [CustomInterface("Интерфейс для работы с сообщениями")]
     public interface IInfoMessageService
     {
+        [CustomMethod("Метод получения списка писем")]
         List<InfoMessageViewModel> GetList();
 
+        [CustomMethod("Метод получения письма по id")]
         InfoMessageViewModel GetElement(int id);
 
+        [CustomMethod("Метод добавления письма")]
         void AddElement(InfoMessageBindingModel model);
     }
 }
