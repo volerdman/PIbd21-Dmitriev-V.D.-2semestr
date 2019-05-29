@@ -53,7 +53,7 @@ namespace AbstractRepairWorkView
             string mail = textBoxMail.Text;
             if (!string.IsNullOrEmpty(mail))
             {
-                if (!Regex.IsMatch(mail, @"^(?("")(""[^""]+?""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9az][-\w]*[0-9a-z]*\.)+[a-z0-9]{2,17}))$"))
+                if (!Regex.IsMatch(mail, @"(\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*)"))
                 {
                     MessageBox.Show("Неверный формат для электронной почты", "Ошибка",
                    MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -63,7 +63,7 @@ namespace AbstractRepairWorkView
             if (id.HasValue)
             {
                 APICustomer.PostRequest<CustomerBindingModel,
-               bool>("api/Component/UpdElement", new CustomerBindingModel
+               bool>("api/Customer/UpdElement", new CustomerBindingModel
                {
                    Id = id.Value,
                    CustomerFIO = fio,
@@ -73,7 +73,7 @@ namespace AbstractRepairWorkView
             else
             {
                 APICustomer.PostRequest<CustomerBindingModel,
-               bool>("api/Component/AddElement", new CustomerBindingModel
+               bool>("api/Customer/AddElement", new CustomerBindingModel
                {
                    CustomerFIO = fio,
                    Mail = mail

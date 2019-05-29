@@ -1,10 +1,6 @@
 ﻿using AbstractRepairServiceDAL.BindingModel;
 using AbstractRepairServiceDAL.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace AbstractRepairWorkRestApi.Controllers
@@ -12,10 +8,12 @@ namespace AbstractRepairWorkRestApi.Controllers
     public class InfoMessageController : ApiController
     {
         private readonly IInfoMessageService _service;
+
         public InfoMessageController(IInfoMessageService service)
         {
             _service = service;
         }
+
         [HttpGet]
         public IHttpActionResult GetList()
         {
@@ -26,6 +24,7 @@ namespace AbstractRepairWorkRestApi.Controllers
             }
             return Ok(list);
         }
+
         [HttpGet]
         public IHttpActionResult Get(int id)
         {
@@ -36,6 +35,7 @@ namespace AbstractRepairWorkRestApi.Controllers
             }
             return Ok(element);
         }
+
         [HttpPost]
         public void AddElement(InfoMessageBindingModel model)
         {

@@ -46,6 +46,7 @@ namespace AbstractRepairWorkServiceImplementDataBase.Implementations
                 Sum = rec.Sum,
                 CustomerFIO = rec.Customer.CustomerFIO,
                 RepairName = rec.Repair.RepairName,
+                ExecutorId = rec.ExecutorId,
                 ExecutorFIO = rec.Executor.ExecutorFIO
             })
             .ToList();
@@ -54,7 +55,7 @@ namespace AbstractRepairWorkServiceImplementDataBase.Implementations
 
         public void CreateBooking(BookingBindingModel model)
         {
-            context.Bookings.Add(new Booking
+            var booking = new Booking
             {
                 CustomerId = model.CustomerId,
                 RepairId = model.RepairId,
@@ -63,7 +64,9 @@ namespace AbstractRepairWorkServiceImplementDataBase.Implementations
                 Count = model.Count,
                 Sum = model.Sum,
                 Status = BookingStatus.Принят
-            });
+            };
+            var customer = context.Customers.FirstOrDefault(x => x.Id == model.CustomerId);
+            SendEmail(customer.Mail, "Оповещение по заказам", string.Format("Заказ №{0} от {1} создан успешно", booking.Id, booking.CreateDate.ToShortDateString()));
             context.SaveChanges();
         }
 
@@ -84,13 +87,13 @@ namespace AbstractRepairWorkServiceImplementDataBase.Implementations
                         throw new Exception("Заказ не в статусе \"Принят\"");
                     }
                     var materialRepairs = context.MaterialRepairs.Include(rec =>
-                    rec.Material).Where(rec => rec.RepairId == element.RepairId);
+                    rec.Material).Where(rec => rec.RepairId == element.RepairId).ToList();
                     // списываем
                     foreach (var materialRepair in materialRepairs)
                     {
                         int countOnStorage = materialRepair.Count * element.Count;
                         var storageMaterials = context.StorageMaterials.Where(rec =>
-                        rec.MaterialId == materialRepair.MaterialId);
+                        rec.MaterialId == materialRepair.MaterialId).ToList();
                         foreach (var storageMaterial in storageMaterials)
                         {
                             // компонентов на одном слкаде может не хватать
