@@ -6,7 +6,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Услуга</h2>
 
 
 @using (Html.BeginForm("CreateRepairPost", "Repair", FormMethod.Post))
@@ -14,7 +14,7 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Repair's ingredients</h4>
+        <h4>Repair's material</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
