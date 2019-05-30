@@ -64,5 +64,17 @@ serviceExecutor)
                 new WorkExecutor(_service, _serviceExecutor, impl.Id, booking.Id);
             }
         }
+
+        [HttpGet]
+        public IHttpActionResult GetInfo()
+        {
+            ReflectionService service = new ReflectionService();
+            var list = service.GetInfoByAssembly();
+            if (list == null)
+            {
+                InternalServerError(new Exception("Нет данных"));
+            }
+            return Ok(list);
+        }
     }
 }
