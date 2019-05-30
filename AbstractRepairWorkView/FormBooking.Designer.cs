@@ -90,7 +90,7 @@
             // labelSum
             // 
             this.labelSum.AutoSize = true;
-            this.labelSum.Location = new System.Drawing.Point(15, 195);
+            this.labelSum.Location = new System.Drawing.Point(15, 151);
             this.labelSum.Name = "labelSum";
             this.labelSum.Size = new System.Drawing.Size(44, 13);
             this.labelSum.TabIndex = 5;
@@ -123,7 +123,7 @@
             // 
             // textBoxSum
             // 
-            this.textBoxSum.Location = new System.Drawing.Point(101, 192);
+            this.textBoxSum.Location = new System.Drawing.Point(101, 144);
             this.textBoxSum.Name = "textBoxSum";
             this.textBoxSum.ReadOnly = true;
             this.textBoxSum.Size = new System.Drawing.Size(193, 20);

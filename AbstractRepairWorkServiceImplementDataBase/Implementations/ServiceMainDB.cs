@@ -58,8 +58,8 @@ namespace AbstractRepairWorkServiceImplementDataBase.Implementations
             var booking = new Booking
             {
                 CustomerId = model.CustomerId,
-                RepairId = model.RepairId,
                 ExecutorId = model.ExecutorId,
+                RepairId = model.RepairId,
                 CreateDate = DateTime.Now,
                 Count = model.Count,
                 Sum = model.Sum,
@@ -120,6 +120,7 @@ namespace AbstractRepairWorkServiceImplementDataBase.Implementations
                     }
                     element.ExecutorId = model.ExecutorId;
                     element.ImplementDate = DateTime.Now;
+                    element.ExecutorId = model.ExecutorId;
                     element.Status = BookingStatus.Выполняется;
                     context.SaveChanges();
                     SendEmail(element.Customer.Mail, "Оповещение по заказам",
