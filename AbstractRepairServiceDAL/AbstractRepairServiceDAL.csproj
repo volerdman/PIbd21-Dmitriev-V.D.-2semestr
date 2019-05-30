@@ -42,18 +42,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BindingModel\BookingBindingModel.cs" />
-    <Compile Include="BindingModel\BookingStatusBindingModel.cs" />
     <Compile Include="BindingModel\CustomerBindingModel.cs" />
     <Compile Include="BindingModel\MaterialBindingModel.cs" />
     <Compile Include="BindingModel\MaterialRepairBindingModel.cs" />
     <Compile Include="BindingModel\RepairBindingModel.cs" />
     <Compile Include="Interfaces\ICustomerService.cs" />
-    <Compile Include="Interfaces\IMaterialRepairService.cs" />
     <Compile Include="Interfaces\IMaterialService.cs" />
     <Compile Include="Interfaces\IRepairService.cs" />
     <Compile Include="Interfaces\IServiceMain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\BookingStatusViewModel.cs" />
     <Compile Include="ViewModel\BookingViewModel.cs" />
     <Compile Include="ViewModel\CustomerViewModel.cs" />
     <Compile Include="ViewModel\MaterialRepairViewModel.cs" />
