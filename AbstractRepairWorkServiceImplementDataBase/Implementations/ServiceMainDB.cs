@@ -4,11 +4,14 @@ using AbstractRepairServiceDAL.ViewModel;
 using AbstractRepairWorkModel;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity.SqlServer;
 using System.Linq;
 using System.Data.Entity;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net.Mail;
+using System.Net;
 
 namespace AbstractRepairWorkServiceImplementDataBase.Implementations
 {
@@ -52,7 +55,7 @@ namespace AbstractRepairWorkServiceImplementDataBase.Implementations
 
         public void CreateBooking(BookingBindingModel model)
         {
-            context.Bookings.Add(new Booking
+            var booking = new Booking
             {
                 CustomerId = model.CustomerId,
                 ExecutorId = model.ExecutorId,
@@ -61,7 +64,9 @@ namespace AbstractRepairWorkServiceImplementDataBase.Implementations
                 Count = model.Count,
                 Sum = model.Sum,
                 Status = BookingStatus.Принят
-            });
+            };
+            var customer = context.Customers.FirstOrDefault(x => x.Id == model.CustomerId);
+            SendEmail(customer.Mail, "Оповещение по заказам", string.Format("Заказ №{0} от {1} создан успешно", booking.Id, booking.CreateDate.ToShortDateString()));
             context.SaveChanges();
         }
 
@@ -69,59 +74,66 @@ namespace AbstractRepairWorkServiceImplementDataBase.Implementations
         {
             using (var transaction = context.Database.BeginTransaction())
             {
+                Booking element = context.Bookings.FirstOrDefault(rec => rec.Id == model.Id);
                 try
                 {
-                    Booking element = context.Bookings.FirstOrDefault(rec => rec.Id ==
-                   model.Id);
                     if (element == null)
                     {
                         throw new Exception("Элемент не найден");
                     }
-                    if (element.Status != BookingStatus.Принят)
+                    if (element.Status != BookingStatus.Принят && element.Status !=
+                    BookingStatus.НедостаточноРесурсов)
                     {
                         throw new Exception("Заказ не в статусе \"Принят\"");
                     }
-                    var repairMaterials = context.MaterialRepairs.Include(rec => rec.Material)
-                        .Where(rec => rec.RepairId == element.RepairId).ToList();
+                    var materialRepairs = context.MaterialRepairs.Include(rec =>
+                    rec.Material).Where(rec => rec.RepairId == element.RepairId).ToList();
                     // списываем
-                    foreach (var repairMaterial in repairMaterials)
+                    foreach (var materialRepair in materialRepairs)
                     {
-                        int countOnStorages = repairMaterial.Count * element.Count;
-                        var stockMaterials = context.StorageMaterials.Where(rec =>
-                        rec.MaterialId == repairMaterial.MaterialId).ToList();
-                        foreach (var stockMaterial in stockMaterials)
+                        int countOnStorage = materialRepair.Count * element.Count;
+                        var storageMaterials = context.StorageMaterials.Where(rec =>
+                        rec.MaterialId == materialRepair.MaterialId).ToList();
+                        foreach (var storageMaterial in storageMaterials)
                         {
-                            // материалов на одном складе может не хватать
-                            if (stockMaterial.Count >= countOnStorages)
+                            // компонентов на одном слкаде может не хватать
+                            if (storageMaterial.Count >= countOnStorage)
                             {
-                                stockMaterial.Count -= countOnStorages;
-                                countOnStorages = 0;
+                                storageMaterial.Count -= countOnStorage;
+                                countOnStorage = 0;
                                 context.SaveChanges();
                                 break;
                             }
                             else
                             {
-                                countOnStorages -= stockMaterial.Count;
-                                stockMaterial.Count = 0;
+                                countOnStorage -= storageMaterial.Count;
+                                storageMaterial.Count = 0;
                                 context.SaveChanges();
                             }
                         }
-                        if (countOnStorages > 0)
+                        if (countOnStorage > 0)
                         {
-                            throw new Exception("Не достаточно материала " +
-                           repairMaterial.Material.MaterialName + " требуется " + repairMaterial.Count + 
-                           ", не хватает " + countOnStorages);
+                            throw new Exception("Не достаточно компонента " +
+                           materialRepair.Material.MaterialName + " требуется " + materialRepair.Count + ", не хватает " +
+                           countOnStorage);
                          }
                     }
+                    element.ExecutorId = model.ExecutorId;
                     element.ImplementDate = DateTime.Now;
                     element.ExecutorId = model.ExecutorId;
                     element.Status = BookingStatus.Выполняется;
                     context.SaveChanges();
+                    SendEmail(element.Customer.Mail, "Оповещение по заказам",
+                    string.Format("Заказ №{0} от {1} передеан в работу", element.Id,
+                    element.CreateDate.ToShortDateString()));
                     transaction.Commit();
                 }
                 catch (Exception)
                 {
                     transaction.Rollback();
+                    element.Status = BookingStatus.НедостаточноРесурсов;
+                    context.SaveChanges();
+                    transaction.Commit();
                     throw;
                 }
             }
@@ -140,6 +152,8 @@ namespace AbstractRepairWorkServiceImplementDataBase.Implementations
             }
             element.Status = BookingStatus.Готов;
             context.SaveChanges();
+            SendEmail(element.Customer.Mail, "Оповещение по заказам", string.Format("Заказ №{0} от {1} передан на оплату", 
+                element.Id, element.CreateDate.ToShortDateString()));
         }
 
         public void PayBooking(BookingBindingModel model)
@@ -155,6 +169,8 @@ namespace AbstractRepairWorkServiceImplementDataBase.Implementations
             }
             element.Status = BookingStatus.Оплачен;
             context.SaveChanges();
+            SendEmail(element.Customer.Mail, "Оповещение по заказам", string.Format("Заказ №{0} от {1} оплачен успешно", 
+                element.Id, element.CreateDate.ToShortDateString()));
         }
 
         public void PutMaterialOnStorage(StorageMaterialBindingModel model)
@@ -188,6 +204,39 @@ namespace AbstractRepairWorkServiceImplementDataBase.Implementations
             })
             .ToList();
             return result;
+        }
+
+        private void SendEmail(string mailAddress, string subject, string text)
+        {
+            MailMessage objMailMessage = new MailMessage();
+            SmtpClient objSmtpClient = null;
+            try
+            {
+                objMailMessage.From = new
+               MailAddress(ConfigurationManager.AppSettings["MailLogin"]);
+                objMailMessage.To.Add(new MailAddress(mailAddress));
+                objMailMessage.Subject = subject;
+                objMailMessage.Body = text;
+                objMailMessage.SubjectEncoding = System.Text.Encoding.UTF8;
+                objMailMessage.BodyEncoding = System.Text.Encoding.UTF8;
+                objSmtpClient = new SmtpClient("smtp.gmail.com", 587);
+                objSmtpClient.UseDefaultCredentials = false;
+                objSmtpClient.EnableSsl = true;
+                objSmtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+                objSmtpClient.Credentials = new
+               NetworkCredential(ConfigurationManager.AppSettings["MailLogin"],
+               ConfigurationManager.AppSettings["MailPassword"]);
+                objSmtpClient.Send(objMailMessage);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                objMailMessage = null;
+                objSmtpClient = null;
+            }
         }
     }
 }

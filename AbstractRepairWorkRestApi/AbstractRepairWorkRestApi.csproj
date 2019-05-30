@@ -115,6 +115,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\ExecutorController.cs" />
+    <Compile Include="Controllers\InfoMessageController.cs" />
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Controllers\MaterialController.cs" />
     <Compile Include="Controllers\RepairController.cs" />

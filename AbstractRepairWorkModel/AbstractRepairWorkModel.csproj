@@ -52,6 +52,7 @@
     <Compile Include="BookingStatus.cs" />
     <Compile Include="Customer.cs" />
     <Compile Include="Executor.cs" />
+    <Compile Include="InfoMessage.cs" />
     <Compile Include="Material.cs" />
     <Compile Include="MaterialRepair.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

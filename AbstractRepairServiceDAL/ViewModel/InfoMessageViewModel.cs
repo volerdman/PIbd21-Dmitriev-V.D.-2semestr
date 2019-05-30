@@ -8,18 +8,21 @@ using System.Threading.Tasks;
 namespace AbstractRepairServiceDAL.ViewModel
 {
     [DataContract]
-    public class CustomerViewModel
+    public class InfoMessageViewModel
     {
         [DataMember]
-        public int Id { get; set; }
+        public string MessageId { get; set; }
 
         [DataMember]
-        public string Mail { get; set; }
+        public string CustomerName { get; set; }
 
         [DataMember]
-        public string CustomerFIO { get; set; }
+        public DateTime DateDelivery { get; set; }
 
         [DataMember]
-        public List<InfoMessageViewModel> Messages { get; set; }
+        public string Subject { get; set; }
+
+        [DataMember]
+        public string Body { get; set; }
     }
 }

@@ -45,6 +45,7 @@
     <Compile Include="BindingModel\BookingBindingModel.cs" />
     <Compile Include="BindingModel\CustomerBindingModel.cs" />
     <Compile Include="BindingModel\ExecutorBindingModel.cs" />
+    <Compile Include="BindingModel\InfoMessageBindingModel.cs" />
     <Compile Include="BindingModel\MaterialBindingModel.cs" />
     <Compile Include="BindingModel\MaterialRepairBindingModel.cs" />
     <Compile Include="BindingModel\RepairBindingModel.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="BindingModel\StorageMaterialBindingModel.cs" />
     <Compile Include="Interfaces\ICustomerService.cs" />
     <Compile Include="Interfaces\IExecutorService.cs" />
+    <Compile Include="Interfaces\IInfoMessageService.cs" />
     <Compile Include="Interfaces\IMaterialService.cs" />
     <Compile Include="Interfaces\IRepairService.cs" />
     <Compile Include="Interfaces\IReportService.cs" />
@@ -63,6 +65,7 @@
     <Compile Include="ViewModel\CustomerBookingModel.cs" />
     <Compile Include="ViewModel\CustomerViewModel.cs" />
     <Compile Include="ViewModel\ExecutorViewModel.cs" />
+    <Compile Include="ViewModel\InfoMessageViewModel.cs" />
     <Compile Include="ViewModel\MaterialRepairViewModel.cs" />
     <Compile Include="ViewModel\MaterialViewModel.cs" />
     <Compile Include="ViewModel\RepairViewModel.cs" />
