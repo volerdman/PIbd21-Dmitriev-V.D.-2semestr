@@ -22,15 +22,5 @@ namespace WebApplicationRepairWork.Controllers
         {
             return RedirectToAction("Index", "Material");
         }
-
-        //public ActionResult Pizzas()
-        //{
-        //    return RedirectToAction("Index", "Pizzas");
-        //}
-
-        //public ActionResult PizzaOrders()
-        //{
-        //    return RedirectToAction("Index", "PizzaOrder");
-        //}
     }
 }
