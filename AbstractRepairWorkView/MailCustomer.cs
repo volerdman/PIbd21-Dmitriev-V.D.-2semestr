@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace AbstractRepairWorkView
 {
-    public class MailCustomer
+    public static class MailCustomer
     {
         private static TcpClient mailCustomer;
         private static SslStream stream;
