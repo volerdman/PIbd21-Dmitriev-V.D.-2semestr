@@ -185,6 +185,7 @@
     <Content Include="Views\Storage\Edit.cshtml" />
     <Content Include="Views\Storage\Create.cshtml" />
     <Content Include="Views\AddMaterialStorage\Index.cshtml" />
+    <Content Include="Views\Storage\More.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

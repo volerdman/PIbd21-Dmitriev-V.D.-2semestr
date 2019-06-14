@@ -23,14 +23,14 @@ namespace WebApplicationRepairWork.Controllers
             return RedirectToAction("Index", "Material");
         }
 
-        //public ActionResult Pizzas()
-        //{
-        //    return RedirectToAction("Index", "Pizzas");
-        //}
+        public ActionResult Repairs()
+        {
+            return RedirectToAction("Index", "Repairs");
+        }
 
-        //public ActionResult PizzaOrders()
-        //{
-        //    return RedirectToAction("Index", "PizzaOrder");
-        //}
+        public ActionResult Booking()
+        {
+            return RedirectToAction("Index", "Booking");
+        }
     }
 }

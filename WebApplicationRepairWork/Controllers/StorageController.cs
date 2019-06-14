@@ -54,6 +54,13 @@ namespace WebApplicationRepairWork.Controllers
             return RedirectToAction("List");
         }
 
+        public ActionResult More(int id)
+        {
+            var viewModel = service.GetElement(id);
+
+            return View(viewModel);
+        }
+
         public ActionResult Delete(int id)
         {
             service.DeleteElement(id);
