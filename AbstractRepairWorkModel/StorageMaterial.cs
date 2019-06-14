@@ -18,5 +18,9 @@ namespace AbstractRepairWorkModel
         public int MaterialId { get; set; }
 
         public int Count { get; set; }
+
+        public virtual Storage Storage { get; set; }
+
+        public virtual Material Material { get; set; }
     }
 }
