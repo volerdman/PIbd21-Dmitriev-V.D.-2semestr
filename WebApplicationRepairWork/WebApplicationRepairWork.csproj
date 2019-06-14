@@ -45,6 +45,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -212,6 +218,10 @@
     <ProjectReference Include="..\AbstractRepairWorkModel\AbstractRepairWorkModel.csproj">
       <Project>{91330e1a-6316-4871-802f-e2f2346a94a2}</Project>
       <Name>AbstractRepairWorkModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AbstractRepairWorkServiceImplementDataBase\AbstractRepairWorkServiceImplementDataBase.csproj">
+      <Project>{B263ED2E-573C-4371-8B07-403DE91C82A0}</Project>
+      <Name>AbstractRepairWorkServiceImplementDataBase</Name>
     </ProjectReference>
     <ProjectReference Include="..\AbstractRepairWorkServiceImplement\AbstractRepairWorkServiceImplement.csproj">
       <Project>{a56ade12-84cc-4e2e-9aff-8a99724b6523}</Project>
