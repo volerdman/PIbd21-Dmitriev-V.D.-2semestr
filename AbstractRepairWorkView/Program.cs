@@ -1,10 +1,8 @@
 ﻿using AbstractRepairServiceDAL.Interfaces;
-using AbstractRepairsWorkServiceImplement.Implementations;
-using AbstractRepairWorkServiceImplement.Implementations;
+using AbstractRepairWorkServiceImplementDataBase;
+using AbstractRepairWorkServiceImplementDataBase.Implementations;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Data.Entity;
 using System.Windows.Forms;
 using Unity;
 using Unity.Lifetime;
@@ -29,16 +27,18 @@ namespace AbstractRepairWorkView
         public static IUnityContainer BuildUnityContainer()
         {
             var currentContainer = new UnityContainer();
-            currentContainer.RegisterType<ICustomerService, CustomerServiceList>(new
+            currentContainer.RegisterType<DbContext, AbstractRepairDbContext>(new
            HierarchicalLifetimeManager());
-            currentContainer.RegisterType<IMaterialService, MaterialServiceList>(new
+            currentContainer.RegisterType<ICustomerService, CustomerServiceDB>(new
            HierarchicalLifetimeManager());
-            currentContainer.RegisterType<IRepairService, RepairServiceList>(new
+            currentContainer.RegisterType<IMaterialService, MaterialServiceDB>(new
            HierarchicalLifetimeManager());
-            currentContainer.RegisterType<IServiceMain, ServiceMainList>(new
+            currentContainer.RegisterType<IRepairService, RepairServiceDB>(new
            HierarchicalLifetimeManager());
-            currentContainer.RegisterType<IStorageService, StorageServiceList>(new
+            currentContainer.RegisterType<IStorageService, StorageServiceDB>(new
            HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IServiceMain, ServiceMainDB>(new
+           HierarchicalLifetimeManager());
             return currentContainer;
         }
     }

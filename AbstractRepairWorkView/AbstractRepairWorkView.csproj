@@ -36,7 +36,14 @@
     <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\Unity.5.8.10\lib\net46\CommonServiceLocator.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Configuration.ConfigurationManager, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Configuration.ConfigurationManager.4.4.1\lib\net461\System.Configuration.ConfigurationManager.dll</HintPath>
@@ -199,7 +206,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\DataSources\AbstractRepairWorkModel.Material.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -222,6 +231,10 @@
     <ProjectReference Include="..\AbstractRepairWorkModel\AbstractRepairWorkModel.csproj">
       <Project>{91330e1a-6316-4871-802f-e2f2346a94a2}</Project>
       <Name>AbstractRepairWorkModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AbstractRepairWorkServiceImplementDataBase\AbstractRepairWorkServiceImplementDataBase.csproj">
+      <Project>{b263ed2e-573c-4371-8b07-403de91c82a0}</Project>
+      <Name>AbstractRepairWorkServiceImplementDataBase</Name>
     </ProjectReference>
     <ProjectReference Include="..\AbstractRepairWorkServiceImplement\AbstractRepairWorkServiceImplement.csproj">
       <Project>{A56ADE12-84CC-4E2E-9AFF-8A99724B6523}</Project>
