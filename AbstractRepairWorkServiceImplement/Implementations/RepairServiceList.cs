@@ -13,108 +13,69 @@ namespace AbstractRepairWorkServiceImplement.Implementations
     public class RepairServiceList:IRepairService
     {
         private DataSingletonList source;
+
         public RepairServiceList()
         {
             source = DataSingletonList.GetInstance();
         }
+
         public List<RepairViewModel> ListGet()
         {
-            List<RepairViewModel> result = new List<RepairViewModel>();
-            for (int i = 0; i < source.Repairs.Count; ++i)
+            List<RepairViewModel> result = source.Repairs.Select(rec => new RepairViewModel
             {
-                // требуется дополнительно получить список материалов для услуги и их количество
-                List<MaterialRepairViewModel> productMaterials = new List<MaterialRepairViewModel>();
-                for (int j = 0; j < source.MaterialRepairs.Count; ++j)
-                {
-                    if (source.MaterialRepairs[j].RepairId == source.Repairs[i].Id)
+                Id = rec.Id,
+                RepairName = rec.RepairName,
+                Cost = rec.Cost,
+                MaterialRepair = source.MaterialRepairs
+                    .Where(recMR => recMR.RepairId == rec.Id)
+                    .Select(recMR => new MaterialRepairViewModel
                     {
-                        string materialName = string.Empty;
-                        for (int k = 0; k < source.Materials.Count; ++k)
-                        {
-                            if (source.MaterialRepairs[j].MaterialId ==
-                           source.Materials[k].Id)
-                            {
-                                materialName = source.Materials[k].MaterialName;
-                                break;
-                            }
-                        }
-                        productMaterials.Add(new MaterialRepairViewModel
-                        {
-                            Id = source.MaterialRepairs[j].Id,
-                            RepairId = source.MaterialRepairs[j].RepairId,
-                            MaterialId = source.MaterialRepairs[j].MaterialId,
-                            MaterialName = materialName,
-                            Count = source.MaterialRepairs[j].Count
-                        });
-                    }
-                }
-                result.Add(new RepairViewModel
-                {
-                    Id = source.Repairs[i].Id,
-                    RepairName = source.Repairs[i].RepairName,
-                    Cost = source.Repairs[i].Cost,
-                    MaterialRepair = productMaterials
-                });
-            }
+                        Id = recMR.Id,
+                        RepairId = recMR.RepairId,
+                        MaterialId = recMR.MaterialId,
+                        MaterialName = source.Materials.FirstOrDefault(recM =>
+                        recM.Id == recMR.MaterialId)?.MaterialName,
+                        Count = recMR.Count
+                    }).ToList()
+            }).ToList();
             return result;
         }
+
         public RepairViewModel ElementGet(int id)
         {
-            for (int i = 0; i < source.Repairs.Count; ++i)
+            Repair element = source.Repairs.FirstOrDefault(rec => rec.Id == id);
+            if (element != null)
             {
-                // требуется дополнительно получить список компонентов для изделия и их количество
-                List<MaterialRepairViewModel> productMaterials = new List<MaterialRepairViewModel>();
-                for (int j = 0; j < source.MaterialRepairs.Count; ++j)
+                return new RepairViewModel
                 {
-                    if (source.MaterialRepairs[j].RepairId == source.Repairs[i].Id)
-                    {
-                        string materialName = string.Empty;
-                        for (int k = 0; k < source.Materials.Count; ++k)
-                        {
-                            if (source.MaterialRepairs[j].MaterialId ==
-                           source.Materials[k].Id)
-                            {
-                                materialName = source.Materials[k].MaterialName;
-                                break;
-                            }
-                        }
-                        productMaterials.Add(new MaterialRepairViewModel
-                        {
-                            Id = source.MaterialRepairs[j].Id,
-                            RepairId = source.MaterialRepairs[j].RepairId,
-                            MaterialId = source.MaterialRepairs[j].MaterialId,
-                            MaterialName = materialName,
-                            Count = source.MaterialRepairs[j].Count
-                        });
-                    }
-                }
-                if (source.Repairs[i].Id == id)
+                    Id = element.Id,
+                    RepairName = element.RepairName,
+                    Cost = element.Cost,
+                    MaterialRepair = source.MaterialRepairs
+                .Where(recMR => recMR.RepairId == element.Id)
+                .Select(recMR => new MaterialRepairViewModel
                 {
-                    return new RepairViewModel
-                    {
-                        Id = source.Repairs[i].Id,
-                        RepairName = source.Repairs[i].RepairName,
-                        Cost = source.Repairs[i].Cost,
-                        MaterialRepair = productMaterials
-                    };
-                }
+                    Id = recMR.Id,
+                    RepairId = recMR.RepairId,
+                    MaterialId = recMR.MaterialId,
+                    MaterialName = source.Materials.FirstOrDefault(recC => recC.Id == recMR.MaterialId)?.MaterialName,
+                    Count = recMR.Count
+                })
+               .ToList()
+                };
             }
             throw new Exception("Элемент не найден");
         }
+
         public void AddElement(RepairBindingModel model)
         {
-            int maxId = 0;
-            for (int i = 0; i < source.Repairs.Count; ++i)
+            Repair element = source.Repairs.FirstOrDefault(rec => rec.RepairName == model.RepairName);
+            if (element != null)
             {
-                if (source.Repairs[i].Id > maxId)
-                {
-                    maxId = source.Repairs[i].Id;
-                }
-                if (source.Repairs[i].RepairName == model.RepairName)
-                {
-                    throw new Exception("Уже есть изделие с таким названием");
-                }
+                throw new Exception("Уже есть услуга с таким названием");
             }
+            int maxId = source.Repairs.Count > 0 ? source.Repairs.Max(rec => rec.Id) :
+           0;
             source.Repairs.Add(new Repair
             {
                 Id = maxId + 1,
@@ -122,143 +83,101 @@ namespace AbstractRepairWorkServiceImplement.Implementations
                 Cost = model.Cost
             });
             // компоненты для изделия
-            int maxPCId = 0;
-            for (int i = 0; i < source.MaterialRepairs.Count; ++i)
-            {
-                if (source.MaterialRepairs[i].Id > maxPCId)
-                {
-                    maxPCId = source.MaterialRepairs[i].Id;
-                }
-            }
+            int maxPCId = source.MaterialRepairs.Count > 0 ?
+           source.MaterialRepairs.Max(rec => rec.Id) : 0;
             // убираем дубли по компонентам
-            for (int i = 0; i < model.MaterialRepair.Count; ++i)
-            {
-                for (int j = 1; j < model.MaterialRepair.Count; ++j)
-                {
-                    if (model.MaterialRepair[i].MaterialId ==
-                    model.MaterialRepair[j].MaterialId)
-                    {
-                        model.MaterialRepair[i].Count +=
-                        model.MaterialRepair[j].Count;
-                        model.MaterialRepair.RemoveAt(j--);
-                    }
-                }
-            }
+            var groupMaterials = model.MaterialRepair
+            .GroupBy(rec => rec.MaterialId)
+           .Select(rec => new
+           {
+               MaterialId = rec.Key,
+               Count = rec.Sum(r => r.Count)
+           });
             // добавляем компоненты
-            for (int i = 0; i < model.MaterialRepair.Count; ++i)
+            foreach (var groupMaterial in groupMaterials)
             {
                 source.MaterialRepairs.Add(new MaterialRepair
                 {
                     Id = ++maxPCId,
                     RepairId = maxId + 1,
-                    MaterialId = model.MaterialRepair[i].MaterialId,
-                    Count = model.MaterialRepair[i].Count
+                    MaterialId = groupMaterial.MaterialId,
+                    Count = groupMaterial.Count
                 });
             }
         }
+
         public void UpdateElement(RepairBindingModel model)
         {
-            int index = -1;
-            for (int i = 0; i < source.Repairs.Count; ++i)
+            Repair element = source.Repairs.FirstOrDefault(rec => rec.RepairName ==
+           model.RepairName && rec.Id != model.Id);
+            if (element != null)
             {
-                if (source.Repairs[i].Id == model.Id)
-                {
-                    index = i;
-                }
-                if (source.Repairs[i].RepairName == model.RepairName &&
-                source.Repairs[i].Id != model.Id)
-                {
-                    throw new Exception("Уже есть изделие с таким названием");
-                }
+                throw new Exception("Уже есть изделие с таким названием");
             }
-            if (index == -1)
+            element = source.Repairs.FirstOrDefault(rec => rec.Id == model.Id);
+            if (element == null)
             {
                 throw new Exception("Элемент не найден");
             }
-            source.Repairs[index].RepairName = model.RepairName;
-            source.Repairs[index].Cost = model.Cost;
-            int maxPCId = 0;
-            for (int i = 0; i < source.MaterialRepairs.Count; ++i)
+            element.RepairName = model.RepairName;
+            element.Cost = model.Cost;
+            int maxMRId = source.MaterialRepairs.Count > 0 ?
+           source.MaterialRepairs.Max(rec => rec.Id) : 0;
+            // обновляем существуюущие компоненты
+            var matIds = model.MaterialRepair.Select(rec =>
+           rec.MaterialId).Distinct();
+            var updateMaterials = source.MaterialRepairs.Where(rec => rec.RepairId ==
+           model.Id && matIds.Contains(rec.MaterialId));
+            foreach (var updateMaterial in updateMaterials)
             {
-                if (source.MaterialRepairs[i].Id > maxPCId)
-                {
-                    maxPCId = source.MaterialRepairs[i].Id;
-                }
+                updateMaterial.Count = model.MaterialRepair.FirstOrDefault(rec =>
+               rec.Id == updateMaterial.Id).Count;
             }
-            // обновляем существуюущие материалы
-            for (int i = 0; i < source.MaterialRepairs.Count; ++i)
-            {
-                if (source.MaterialRepairs[i].RepairId == model.Id)
-                {
-                    bool flag = true;
-                    for (int j = 0; j < model.MaterialRepair.Count; ++j)
-                    {
-                        // если встретили, то изменяем количество
-                        if (source.MaterialRepairs[i].Id == model.MaterialRepair[j].Id)
-                        {
-                            source.MaterialRepairs[i].Count = model.MaterialRepair[j].Count;
-                            flag = false;
-                            break;
-                        }
-                    }
-                    // если не встретили, то удаляем
-                    if (flag)
-                    {
-                        source.MaterialRepairs.RemoveAt(i--);
-                    }
-                }
-            }
+            source.MaterialRepairs.RemoveAll(rec => rec.RepairId == model.Id &&
+           !matIds.Contains(rec.MaterialId));
             // новые записи
-            for (int i = 0; i < model.MaterialRepair.Count; ++i)
+            var groupMaterials = model.MaterialRepair
+            .Where(rec => rec.Id == 0)
+           .GroupBy(rec => rec.MaterialId)
+           .Select(rec => new
+           {
+               MaterialId = rec.Key,
+               Count = rec.Sum(r => r.Count)
+           });
+            foreach (var groupMaterial in groupMaterials)
             {
-                if (model.MaterialRepair[i].Id == 0)
+                MaterialRepair elementMR = source.MaterialRepairs.FirstOrDefault(rec
+               => rec.RepairId == model.Id && rec.MaterialId == groupMaterial.MaterialId);
+                if (elementMR != null)
                 {
-                    // ищем дубли
-                    for (int j = 0; j < source.MaterialRepairs.Count; ++j)
+                    elementMR.Count += groupMaterial.Count;
+                }
+                else
+                {
+                    source.MaterialRepairs.Add(new MaterialRepair
                     {
-                        if (source.MaterialRepairs[j].RepairId == model.Id &&
-                        source.MaterialRepairs[j].MaterialId ==
-                       model.MaterialRepair[i].MaterialId)
-                        {
-                           source.MaterialRepairs[j].Count +=
-                           model.MaterialRepair[i].Count;
-                           model.MaterialRepair[i].Id =
-                           source.MaterialRepairs[j].Id;
-                           break;
-                        }
-                    }
-                    // если не нашли дубли, то новая запись
-                    if (model.MaterialRepair[i].Id == 0)
-                    {
-                        source.MaterialRepairs.Add(new MaterialRepair
-                        {
-                            Id = ++maxPCId,
-                            RepairId = model.Id,
-                            MaterialId = model.MaterialRepair[i].MaterialId,
-                            Count = model.MaterialRepair[i].Count
-                        });
-                    }
+                        Id = ++maxMRId,
+                        RepairId = model.Id,
+                        MaterialId = groupMaterial.MaterialId,
+                        Count = groupMaterial.Count
+                    });
                 }
             }
         }
+
         public void DeleteElement(int id)
         {
-            for (int i = 0; i < source.MaterialRepairs.Count; ++i)
+            Repair element = source.Repairs.FirstOrDefault(rec => rec.Id == id);
+            if (element != null)
             {
-                if (source.MaterialRepairs[i].RepairId == id)
-                {
-                    source.MaterialRepairs.RemoveAt(i--);
-                }
+                // удаяем записи по компонентам при удалении изделия
+                source.MaterialRepairs.RemoveAll(rec => rec.RepairId == id);
+                source.Repairs.Remove(element);
             }
-            for (int i = 0; i < source.Repairs.Count; ++i)
+            else
             {
-                if (source.Repairs[i].Id == id)
-                {
-                    source.Repairs.RemoveAt(i);
-                    return;
-                }
+                throw new Exception("Элемент не найден");
             }
-            throw new Exception("Элемент не найден");
         }
     }
 }

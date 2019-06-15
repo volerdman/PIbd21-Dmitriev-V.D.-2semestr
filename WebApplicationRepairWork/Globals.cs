@@ -10,5 +10,6 @@ namespace WebApplicationRepairWork
         public static IMaterialService MaterialService { get; } = new MaterialServiceList();
         public static IRepairService RepairService { get; } = new RepairServiceList();
         public static IServiceMain MainService { get; } = new ServiceMainList();
+        public static IStorageService StorageService { get; } = new StorageServiceList();
     }
 }

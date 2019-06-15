@@ -22,5 +22,15 @@ namespace WebApplicationRepairWork.Controllers
         {
             return RedirectToAction("Index", "Material");
         }
+
+        public ActionResult Repairs()
+        {
+            return RedirectToAction("Index", "Repairs");
+        }
+
+        public ActionResult Booking()
+        {
+            return RedirectToAction("Index", "Booking");
+        }
     }
 }
